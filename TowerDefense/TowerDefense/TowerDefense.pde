@@ -1,19 +1,16 @@
 
 ArrayList<Tile> tiles = new ArrayList<Tile>();
 
-PImage bg;
-
 void setup()
 {
   size(1280,800);
-  bg = loadImage("bg_claytons.png");
   SpawnGrid();
 }
 
 void draw()
 {
   background(194,219,208);
-  background(bg);
+  
   
   fill(255,255,255);
   noStroke();
@@ -36,13 +33,12 @@ void draw()
 
 void SpawnGrid()
 {
-  for(int i = 1; i <= 14; i++)
+  for(int i = 0; i < 14; i++)
   {
-   for (int j = 1; j <= 14; j++)
+   for (int j =0 ; j < 14; j++)
    {
-    Tile t = new Tile(i * 50, j * 50);
+    Tile t = new Tile(i, j);
     tiles.add(t); 
-    print(t.pos.x + " , " + t.pos.y + "\n");
    }
   }
 }
