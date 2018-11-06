@@ -1,16 +1,19 @@
 
 ArrayList<Tile> tiles = new ArrayList<Tile>();
 
+PImage bg;
+
 void setup()
 {
   size(1280,800);
+  bg = loadImage("bg_claytons.png");
   SpawnGrid();
 }
 
 void draw()
 {
   background(194,219,208);
-  
+  background(bg);
   
   fill(255,255,255);
   noStroke();
