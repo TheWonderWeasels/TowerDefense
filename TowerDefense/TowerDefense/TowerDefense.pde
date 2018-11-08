@@ -1,5 +1,6 @@
 
 ArrayList<Tile> tiles = new ArrayList<Tile>();
+ArrayList<Entity> entities = new ArrayList<Entity>();
 Level level;
 PathFinder pathfinder;
 void setup()
