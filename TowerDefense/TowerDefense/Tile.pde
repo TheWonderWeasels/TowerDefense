@@ -39,16 +39,18 @@ class Tile{
   
   void draw()
   {
-   if(TERRAIN == 0)
-     return;
+
+   if(TERRAIN == 0) fill(200,100,50);
    if(TERRAIN == 1) fill(200,100,50);
    if(TERRAIN == 2) fill(250);
-   if(hover) fill(255,255,0);
+   //if(hover)fill(255,255,0); 
+  
    PVector p = TileHelper.gridToPixel(X,Y);
    rect(p.x, p.y, TileHelper.W,TileHelper.H);
+   hover = false;
   }
   
-  PVector GetCenter()
+  PVector getCenter()
   {
     PVector p = TileHelper.gridToPixel(new Point(X,Y));
     p.x += TileHelper.halfW;
@@ -56,7 +58,9 @@ class Tile{
     return p;
   }
   
-  
+  boolean isPassable(){
+    return (TERRAIN != 2); 
+  }
   /////PATHFINDING JANK
   
   ArrayList<Tile> neighbors = new ArrayList<Tile>();

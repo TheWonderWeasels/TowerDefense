@@ -1,10 +1,14 @@
 
 ArrayList<Tile> tiles = new ArrayList<Tile>();
-
+Level level;
+PathFinder pathfinder;
 void setup()
 {
   size(1280,800);
-  SpawnGrid();
+  TileHelper.app = this;
+  level = new Level();
+  pathfinder = new PathFinder();
+  //SpawnGrid();
 }
 
 void draw()
@@ -14,6 +18,7 @@ void draw()
   
   fill(255,255,255);
   noStroke();
+  strokeWeight(0);
   rect(50,50,700,700); // Play Space
   
   fill(210);
@@ -21,24 +26,16 @@ void draw()
   fill(191);
   rect(800,50,430,338);
   rect(800,413,430,338);
-  
-  for(Tile tile:tiles)
+  level.draw();
+  Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
+  Tile tile = level.getTile(g);
+  if(tile != null)
   {
-   tile.draw(); 
-   
+    tile.hover = true;
+    stroke(255,0,0);
+    strokeWeight(3);
+    noFill();
+    rect(TileHelper.gridToPixel(g).x, TileHelper.gridToPixel(g).y, 50,50);
   }
   
-}
-
-
-void SpawnGrid()
-{
-  for(int i = 0; i < 14; i++)
-  {
-   for (int j =0 ; j < 14; j++)
-   {
-    Tile t = new Tile(i, j);
-    tiles.add(t); 
-   }
-  }
 }
