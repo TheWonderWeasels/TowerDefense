@@ -6,6 +6,8 @@ class MainGame {
   //PathFinder pathfinder;
   
   PImage bg = loadImage("bg_claytons.png");
+  
+  HUD hud;
 
   //void setup()
   //{
@@ -17,17 +19,18 @@ class MainGame {
   void draw()
   {
     background(bg);
+    hud = new HUD();
   
     fill(255,255,255);
     noStroke();
     strokeWeight(0);
     rect(50,50,700,700); // Play Space
-  
-    fill(210);
-    rect(800,413-25, 430,100);
+
+    //The two HUD rects
     fill(191);
-    rect(800,50,430,338);
-    rect(800,413,430,338);
+    hud.drawTop();
+    hud.drawBottom();
+    
     level.draw();
     Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
     Tile tile = level.getTile(g);
