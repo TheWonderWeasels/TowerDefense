@@ -1,42 +1,39 @@
+// Controling the game states
+int gameState = 0; //The current state
+final int START_MENU = 0;
+final int MAIN_GAME = 1;
 
-ArrayList<Tile> tiles = new ArrayList<Tile>();
-ArrayList<Entity> entities = new ArrayList<Entity>();
+StartMenu sm;
+MainGame mg;
 Level level;
 PathFinder pathfinder;
-void setup()
-{
-  size(1280,800);
+
+void setup() {
+  size(1280, 800);
+  sm = new StartMenu();
+  mg = new MainGame();
   TileHelper.app = this;
   level = new Level();
   pathfinder = new PathFinder();
-  //SpawnGrid();
 }
 
-void draw()
-{
-  background(194,219,208);
-  
-  
-  fill(255,255,255);
-  noStroke();
-  strokeWeight(0);
-  rect(50,50,700,700); // Play Space
-  
-  fill(210);
-  rect(800,413-25, 430,100);
-  fill(191);
-  rect(800,50,430,338);
-  rect(800,413,430,338);
-  level.draw();
-  Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
-  Tile tile = level.getTile(g);
-  if(tile != null)
-  {
-    tile.hover = true;
-    stroke(255,0,0);
-    strokeWeight(3);
-    noFill();
-    rect(TileHelper.gridToPixel(g).x, TileHelper.gridToPixel(g).y, 50,50);
+void draw(){
+  background(50);
+  switch(gameState) {
+    case START_MENU:
+    sm.draw();
+    break;
+    case MAIN_GAME:
+    //mg.setup();
+    mg.draw();
+    break;
   }
-  
+}
+
+void mousePressed() {
+  sm.mousePressed();
+}
+
+void mouseReleased() {
+  sm.mouseReleased();
 }
