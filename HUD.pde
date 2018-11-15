@@ -15,6 +15,7 @@ The bottom area should usually be pretty empty.  It displays information that is
  - Their damage
  - Their attack speed
  - Their resell value
+ There should also be an upgrade button and a sell button
 */
 
 
@@ -28,6 +29,8 @@ class HUD {
   int pollutionLevelCurrent = 72;
   int currentRound = 10;
   int totalRounds = 50;
+  String[] towerType = {"Clay", "Wood", "Stone", "Wax", "Crystal"};
+  int towerLevel = 1;
   
   //boolean clayHover = false;
   //boolean woodHover = false;
@@ -60,6 +63,14 @@ class HUD {
   void drawBottom() {
     fill(191);
     rect(800,413,430,338);
+    
+    fill(0);
+    textAlign(LEFT, TOP);
+    textFont(bold, 20);
+    text(towerType[1] + " Tower - Level " + towerLevel, 810, 423);
+    textFont(bold, 16);
+    text("Cost", 810, 473);
+    text("Resell", 1015, 473);
   }
   
   ///* Is the mouse hovering over the button area? */
