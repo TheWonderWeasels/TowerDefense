@@ -1,26 +1,21 @@
-class Entity
-{
+class Tower_Base {
   Point gridP = new Point(); // Current Position;
-  Point gridT = new Point(); // target position;
-
   PVector pixelP = new PVector();
 
-  void draw()
-  {
-    noStroke();
-    fill(0);
-    ellipse(pixelP.x, pixelP.y, 25, 25);
-  }
-
-  Entity(Point P) 
-  {
+  Tower_Base(Point P) {
     teleportTo(P);
   }
+
+  void draw() {
+    noStroke();
+    fill(255);
+    rect(pixelP.x - (TileHelper.W/2), pixelP.y - (TileHelper.H/2), TileHelper.W, TileHelper.H);
+  }
+
   void teleportTo(Point gridP) {
     Tile tile = level.getTile(gridP);
     if (tile != null) {
       this.gridP = gridP.get();
-      this.gridT = gridP.get();
       this.pixelP = tile.getCenter();
     }
   }
