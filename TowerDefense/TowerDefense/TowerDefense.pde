@@ -25,6 +25,7 @@ void draw(){
     break;
     case MAIN_GAME:
     //mg.setup();
+    mg.update();
     mg.draw();
     break;
   }

@@ -1,22 +1,31 @@
 class MainGame {
   ArrayList<Tile> tiles = new ArrayList<Tile>();
-  //ArrayList<Entity> entities = new ArrayList<Entity>();
 
-  ArrayList<Tower_Base> Towers = new ArrayList<Tower_Base>();
-  //Towers array
+  ArrayList<Entity> entities = new ArrayList<Entity>();
+  ArrayList<Tower_Base> Towers = new ArrayList<Tower_Base>();   //Towers array
 
-  //Level level;
-  //PathFinder pathfinder;
-
+  Point mouseP;
+ 
   PImage bg = loadImage("bg_claytons.png");
-
-  //void setup()
-  //{
-  //  level = new Level();
-  //  pathfinder = new PathFinder();
-  //  //SpawnGrid();
-  //}
-
+  
+  void update()
+  {
+    if(mousePressed)
+    {
+      if(mouseP != null)
+      {
+       Entity e = new Entity(mouseP);
+       e.setTargetPosition(new Point(0,0));
+       entities.add(e);
+      }
+    }
+    
+    for(Entity e:entities)
+    {
+      e.update();  
+    }
+  }
+  
   void draw()
   {
     background(bg);
@@ -32,37 +41,35 @@ class MainGame {
     rect(800, 50, 430, 338);
     rect(800, 413, 430, 338);
     level.draw();
-    Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
-    Tile tile = level.getTile(g);
 
-    update();
-
-    if (tile != null)
+    mouseP = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
+    if(isOnGrid())
     {
-      //spawn a tower on current grid tile when mouse is pressed
-      if (mousePressed) {
-        if (tile.TERRAIN != 1000) {
-          Tower_Base newTower = new Tower_Base(g);
-          Towers.add(newTower);
-          tile.TERRAIN = 1000;//updates the pathfinding grid with the tower
-          println("Tower Created" + " ");
-        }
+      print(mouseP.x + " " + mouseP.y + "\n");
+      Tile tile = level.getTile(mouseP);
+      if(tile != null)
+      {
+        tile.hover = true;
+        stroke(255,0,0);
+        strokeWeight(3);
+        noFill();
+        rect(TileHelper.gridToPixel(mouseP).x, TileHelper.gridToPixel(mouseP).y, 50,50);
       }
-
-
-      tile.hover = true;
-      stroke(255, 0, 0);
-      strokeWeight(3);
-      noFill();
-      rect(TileHelper.gridToPixel(g).x, TileHelper.gridToPixel(g).y, 50, 50);
+    }
+    else
+      mouseP = null;
+    for(Entity e :entities)
+    {
+      e.draw();
     }
   }
-
-  void update() {
-    //updates the tower
-    for (int i = 0; i < Towers.size(); i++) {
-      Tower_Base tower = Towers.get(i);
-      tower.draw();
-    }
+  
+  boolean isOnGrid()
+  {
+    if(mouseX < 50) return false;
+    if(mouseX > 50 * 15) return false;
+    if(mouseY< 50) return false;
+    if(mouseY > 50 * 15) return false;
+    return true;
   }
 }
