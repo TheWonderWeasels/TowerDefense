@@ -1,10 +1,13 @@
 class MainGame {
   ArrayList<Tile> tiles = new ArrayList<Tile>();
+
   ArrayList<Entity> entities = new ArrayList<Entity>();
-  
+  ArrayList<Tower_Base> Towers = new ArrayList<Tower_Base>();   //Towers array
+
   Point mouseP;
-  
+ 
   PImage bg = loadImage("bg_claytons.png");
+  
   void update()
   {
     if(mousePressed)
@@ -26,18 +29,19 @@ class MainGame {
   void draw()
   {
     background(bg);
-  
-    fill(255,255,255);
+
+    fill(255, 255, 255);
     noStroke();
     strokeWeight(0);
-    rect(50,50,700,700); // Play Space
-  
+    rect(50, 50, 700, 700); // Play Space
+
     fill(210);
-    rect(800,413-25, 430,100);
+    rect(800, 413-25, 430, 100);
     fill(191);
-    rect(800,50,430,338);
-    rect(800,413,430,338);
+    rect(800, 50, 430, 338);
+    rect(800, 413, 430, 338);
     level.draw();
+
     mouseP = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
     if(isOnGrid())
     {

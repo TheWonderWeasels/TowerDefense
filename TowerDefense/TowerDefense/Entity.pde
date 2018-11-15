@@ -2,6 +2,7 @@ class Entity
 {
   Point gridP = new Point(); // Current Position;
   Point gridT = new Point(); // target position;
+
   int health = 5;
   boolean isDead = false;
   PVector pixelP = new PVector();
@@ -13,14 +14,14 @@ class Entity
   {
     teleportTo(P);
   }
-  
+ 
   void draw()
   {
-   noStroke();
-   fill(0);
-   ellipse(pixelP.x, pixelP.y, 25,25);
+    noStroke();
+    fill(0);
+    ellipse(pixelP.x, pixelP.y, 25, 25);
   }
-
+  
   void teleportTo(Point gridP) {
     Tile tile = level.getTile(gridP);
     if (tile != null) {
