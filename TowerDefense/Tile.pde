@@ -42,7 +42,7 @@ class Tile{
 
    if(TERRAIN == 0) fill(200,100,50);
    if(TERRAIN == 1) fill(200,100,50);
-   if(TERRAIN == 2) fill(250);
+   if(TERRAIN == 2) fill(130);
    //if(hover)fill(255,255,0); 
   
    PVector p = TileHelper.gridToPixel(X,Y);
@@ -92,13 +92,18 @@ class Tile{
   
   float getTerrainCost()
   {
+   if (TERRAIN >= 0 && TERRAIN < LevelDefs.MOVECOST.length) return LevelDefs.MOVECOST[TERRAIN];
    return 0; 
   }
   
   
-  void doHeuristic(Tile n)
-  {
-   F = G + distanceEuclidean(n); 
+ void doHeuristic(Tile n, boolean useManhattan) {
+    if (useManhattan) F = G + distanceManhattan(n);
+    if (!useManhattan) F = G + distanceEuclidean(n);
+  }
+  
+  float distanceManhattan(Tile n) {
+    return abs(n.X - X) + abs(n.Y - Y);
   }
   
   float distanceEuclidean(Tile n)
