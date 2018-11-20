@@ -54,4 +54,39 @@ class MainGame {
       tower.draw();
     }
   }
+
+  void mouseReleased() {
+    if (selectedTower!= null)
+    {
+      selectedTower.selected = false;
+    }
+    Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
+    Tile tile = level.getTile(g);
+    //spawn a tower on current grid tile when mouse is pressed
+    if (tile != null) {
+
+      if (tile.TERRAIN == 3) {
+        for (int i = 0; i < Towers.size(); i++) {
+          Tower_Base tower = Towers.get(i);
+          if (tower.gridP.x == g.x) {
+            if (tower.gridP.y == g.y) {
+              selectedTower = tower;
+              tower.selected = true;
+              println("Tower Selected");
+            }
+          } else {
+            tower.selected = false;
+          }
+        }
+      }
+
+      if (tile.TERRAIN != 3) {
+        Tower_Base newTower = new Tower_Base(g);
+        Towers.add(newTower);
+        tile.TERRAIN = 3;//updates the pathfinding grid with the tower
+        println("Tower Created" + " ");
+      }
+      
+    }
+  }
 }

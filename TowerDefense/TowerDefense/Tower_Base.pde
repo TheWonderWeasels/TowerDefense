@@ -2,9 +2,13 @@ class Tower_Base {
   Point gridP = new Point(); // Current Position;
   PVector pixelP = new PVector();
 
-  float range = 200;
+  public float towerType = 1;//2 = wood, 3 = stone, 4 = wax, 5 = crystal
+  public float towerLevel = 1;
+  public float towerRange = 200;
+  public float towerDamage = 5;
+  public float towerSpeed = 1;//attacks per second
 
-  boolean selected = false;
+  public boolean selected = false;
 
   Tower_Base(Point P) {
     teleportTo(P);
@@ -16,7 +20,7 @@ class Tower_Base {
       stroke(200);
       strokeWeight(2);
       fill(0, 0, 0, 50);
-      ellipse(pixelP.x, pixelP.y, range, range);
+      ellipse(pixelP.x, pixelP.y, towerRange, towerRange);
     }
 
     noStroke();
