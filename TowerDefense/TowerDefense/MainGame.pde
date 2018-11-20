@@ -41,6 +41,20 @@ class MainGame {
     {
       //spawn a tower on current grid tile when mouse is pressed
       if (mousePressed) {
+
+        if (tile.TERRAIN == 1000) {
+          for (int i = 0; i < Towers.size(); i++) {
+            Tower_Base tower = Towers.get(i);
+            if (tower.gridP.x == g.x) {
+              if (tower.gridP.y == g.y) {
+                tower.selected = true;
+              }
+            } else {
+              tower.selected = false;
+            }
+          }
+        }
+
         if (tile.TERRAIN != 1000) {
           Tower_Base newTower = new Tower_Base(g);
           Towers.add(newTower);
