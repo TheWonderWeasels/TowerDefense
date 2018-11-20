@@ -2,7 +2,7 @@ class MainGame {
   ArrayList<Tile> tiles = new ArrayList<Tile>();
 
   ArrayList<Entity> entities = new ArrayList<Entity>();
-  ArrayList<Tower_Base> Towers = new ArrayList<Tower_Base>();   //Towers array
+  ArrayList<Tower_Base> towers = new ArrayList<Tower_Base>();   //Towers array
 
   Point mouseP;
  
@@ -14,15 +14,35 @@ class MainGame {
     {
       if(mouseP != null)
       {
-       Entity e = new Entity(mouseP);
-       e.setTargetPosition(new Point(0,0));
-       entities.add(e);
+        if(isOnGrid())
+        {
+          if(mouseButton == RIGHT)
+          {
+           Entity e = new Entity(mouseP);
+           e.setTargetPosition(new Point(0,0));
+           entities.add(e);
+          }
+          if(mouseButton == LEFT)
+          {
+            Tile ti = level.getTile(mouseP);
+            if(ti.TERRAIN != 2)
+            {
+              ti.TERRAIN = 2;
+              Tower_Base t = new Tower_Base(mouseP);
+              towers.add(t);
+            }
+          }
+        }
       }
     }
     
     for(Entity e:entities)
     {
       e.update();  
+    }
+    for(Tower_Base t:towers)
+    {
+     t.update(); 
     }
   }
   
@@ -61,6 +81,11 @@ class MainGame {
     for(Entity e :entities)
     {
       e.draw();
+    }
+    
+    for(Tower_Base t:towers)
+    {
+     t.draw(); 
     }
   }
   
