@@ -11,7 +11,10 @@ class Tower_Base {
     fill(255);
     rect(pixelP.x - (TileHelper.W/2), pixelP.y - (TileHelper.H/2), TileHelper.W, TileHelper.H);
   }
-
+  void update()
+  {
+    
+  }
   void teleportTo(Point gridP) {
     Tile tile = level.getTile(gridP);
     if (tile != null) {
