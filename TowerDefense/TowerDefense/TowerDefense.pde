@@ -32,10 +32,12 @@ void draw(){
 }
 
 void mousePressed() {
+
   switch(gameState){
     case START_MENU:
     sm.mousePressed();
     break;
+    case MAIN_GAME:
   }
 }
 
@@ -45,5 +47,7 @@ void mouseReleased() {
     case START_MENU:
     sm.mouseReleased();
     break;
+    case MAIN_GAME:
+    mg.mouseReleased();
   }
 }
