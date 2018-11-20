@@ -7,6 +7,8 @@ class Tower_Base {
   public float towerRange = 200;
   public float towerDamage = 5;
   public float towerSpeed = 1;//attacks per second
+  
+  public float towerRotation = 0;
 
   public boolean selected = false;
 
