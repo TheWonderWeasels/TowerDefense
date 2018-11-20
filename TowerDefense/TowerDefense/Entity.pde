@@ -138,12 +138,12 @@ class Entity
   }
   void updateMove() {
     
-    float snapThreshold = 1;
+    float snapThreshold = .3;
     PVector pixlT = level.getTileCenterAt(gridP);
     PVector diff = PVector.sub(pixlT, pixelP);
     
-    pixelP.x += diff.x * .2;
-    pixelP.y += diff.y * .2;
+    pixelP.x += diff.x * .1;
+    pixelP.y += diff.y * .1;
     
     if (abs(diff.x) < snapThreshold) pixelP.x = pixlT.x;
     if (abs(diff.y) < snapThreshold) pixelP.y = pixlT.y;

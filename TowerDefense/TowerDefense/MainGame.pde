@@ -13,32 +13,6 @@ class MainGame {
   
   void update()
   {
-    if(mousePressed)
-    {
-      if(mouseP != null)
-      {
-        if(isOnGrid())
-        {
-          if(mouseButton == RIGHT)
-          {
-           Entity e = new Entity(mouseP);
-           e.setTargetPosition(new Point(0,0));
-           entities.add(e);
-          }
-          if(mouseButton == LEFT)
-          {
-            Tile ti = level.getTile(mouseP);
-            if(ti.TERRAIN != 2)
-            {
-              ti.TERRAIN = 2;
-              Tower_Base t = new Tower_Base(mouseP);
-              towers.add(t);
-            }
-          }
-        }
-      }
-    }
-    
     for(Entity e:entities)
     {
       e.update();  
@@ -66,9 +40,19 @@ class MainGame {
     level.draw();
 
     mouseP = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
+
+    for(Entity e :entities)
+    {
+      e.draw();
+    }
+    
+    for(Tower_Base t:towers)
+    {
+     t.draw(); 
+    }
     if(isOnGrid())
     {
-      print(mouseP.x + " " + mouseP.y + "\n");
+      //print(mouseP.x + " " + mouseP.y + "\n");
       Tile tile = level.getTile(mouseP);
       if(tile != null)
       {
@@ -81,52 +65,57 @@ class MainGame {
     }
     else
       mouseP = null;
-    for(Entity e :entities)
-    {
-      e.draw();
-    }
-    
-    for(Tower_Base t:towers)
-    {
-     t.draw(); 
-    }
   }
 // Merge with the other spawning code
 
   void mouseReleased() {
-    if (selectedTower!= null)
-    {
-      selectedTower.selected = false;
-    }
-    Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
-    Tile tile = level.getTile(g);
-    //spawn a tower on current grid tile when mouse is pressed
-    if (tile != null) {
-
-      if (tile.TERRAIN == 3) {
-        for (int i = 0; i < Towers.size(); i++) {
-          Tower_Base tower = Towers.get(i);
-          if (tower.gridP.x == g.x) {
-            if (tower.gridP.y == g.y) {
-              selectedTower = tower;
-              tower.selected = true;
-              println("Tower Selected");
+    
+    if(mouseP != null)
+      {
+        if(isOnGrid())
+        {
+          if(mouseButton == RIGHT)
+          {
+           Entity e = new Entity(mouseP);
+           e.setTargetPosition(new Point(0,0));
+           entities.add(e);
+          }
+          if(mouseButton == LEFT)
+          {
+            if (selectedTower!= null)
+            {
+              selectedTower.selected = false;
             }
-          } else {
-            tower.selected = false;
+            Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
+            Tile tile = level.getTile(g);
+            //spawn a tower on current grid tile when mouse is pressed
+            if (tile != null) {
+              if (tile.TERRAIN == 2) {
+                for (int i = 0; i < towers.size(); i++) {
+                  Tower_Base tower = towers.get(i);
+                  if (tower.gridP.x == g.x) {
+                    if (tower.gridP.y == g.y) {
+                      selectedTower = tower;
+                      tower.selected = true;
+                      println("Tower Selected");
+                    }
+                  } else {
+                    tower.selected = false;
+                  }
+                }
+              }
+      
+            if (tile.TERRAIN != 2) {
+              Tower_Base newTower = new Tower_Base(g);
+              towers.add(newTower);
+              tile.TERRAIN = 2;//updates the pathfinding grid with the tower
+              println("Tower Created" + " ");
+            }
           }
         }
       }
-
-      if (tile.TERRAIN != 3) {
-        Tower_Base newTower = new Tower_Base(g);
-        Towers.add(newTower);
-        tile.TERRAIN = 3;//updates the pathfinding grid with the tower
-        println("Tower Created" + " ");
-      }
-      
     }
-
+  }
   
   boolean isOnGrid()
   {
