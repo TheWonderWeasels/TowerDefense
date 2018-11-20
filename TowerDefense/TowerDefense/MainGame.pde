@@ -4,7 +4,7 @@ class MainGame {
 
   ArrayList<Tower_Base> Towers = new ArrayList<Tower_Base>();
   //Towers array
-
+  Tower_Base selectedTower;
   //Level level;
   //PathFinder pathfinder;
 
@@ -39,31 +39,6 @@ class MainGame {
 
     if (tile != null)
     {
-      //spawn a tower on current grid tile when mouse is pressed
-      if (mousePressed) {
-
-        if (tile.TERRAIN == 1000) {
-          for (int i = 0; i < Towers.size(); i++) {
-            Tower_Base tower = Towers.get(i);
-            if (tower.gridP.x == g.x) {
-              if (tower.gridP.y == g.y) {
-                tower.selected = true;
-              }
-            } else {
-              tower.selected = false;
-            }
-          }
-        }
-
-        if (tile.TERRAIN != 1000) {
-          Tower_Base newTower = new Tower_Base(g);
-          Towers.add(newTower);
-          tile.TERRAIN = 1000;//updates the pathfinding grid with the tower
-          println("Tower Created" + " ");
-        }
-      }
-
-
       tile.hover = true;
       stroke(255, 0, 0);
       strokeWeight(3);

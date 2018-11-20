@@ -32,8 +32,10 @@ void draw(){
 
 void mousePressed() {
   sm.mousePressed();
+
 }
 
 void mouseReleased() {
   sm.mouseReleased();
+  mg.mouseReleased();
 }
