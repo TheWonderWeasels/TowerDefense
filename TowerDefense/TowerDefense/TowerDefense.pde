@@ -25,17 +25,29 @@ void draw(){
     break;
     case MAIN_GAME:
     //mg.setup();
+    mg.update();
     mg.draw();
     break;
   }
 }
 
 void mousePressed() {
-  sm.mousePressed();
 
+  switch(gameState){
+    case START_MENU:
+    sm.mousePressed();
+    break;
+    case MAIN_GAME:
+  }
 }
 
 void mouseReleased() {
-  sm.mouseReleased();
-  mg.mouseReleased();
+  switch(gameState)
+  {
+    case START_MENU:
+    sm.mouseReleased();
+    break;
+    case MAIN_GAME:
+    mg.mouseReleased();
+  }
 }

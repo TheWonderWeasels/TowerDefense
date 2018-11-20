@@ -92,13 +92,18 @@ class Tile{
   
   float getTerrainCost()
   {
+   if (TERRAIN >= 0 && TERRAIN < LevelDefs.MOVECOST.length) return LevelDefs.MOVECOST[TERRAIN];
    return 0; 
   }
   
   
-  void doHeuristic(Tile n)
-  {
-   F = G + distanceEuclidean(n); 
+ void doHeuristic(Tile n, boolean useManhattan) {
+    if (useManhattan) F = G + distanceManhattan(n);
+    if (!useManhattan) F = G + distanceEuclidean(n);
+  }
+  
+  float distanceManhattan(Tile n) {
+    return abs(n.X - X) + abs(n.Y - Y);
   }
   
   float distanceEuclidean(Tile n)
