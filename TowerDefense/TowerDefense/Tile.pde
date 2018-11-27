@@ -11,13 +11,13 @@ static class TileHelper {
     return gridToPixel(p.x, p.y);
   }
   static PVector gridToPixel(int X, int Y){
-    PVector v = new PVector((X * W) + 50, (Y * H)+ 50) ;
+    PVector v = new PVector((X * W), (Y * H)) ;
     return v;
   }
   static Point pixelToGrid(PVector v) {
 
-    int x = (int)((v.x - 50) / W);
-    int y = (int)((v.y -50) / H);    
+    int x = (int)((v.x) / W);
+    int y = (int)((v.y) / H);    
     return app.new Point(x, y);
   }
 }
@@ -43,6 +43,7 @@ class Tile{
    if(TERRAIN == 0) fill(200,100,50);
    if(TERRAIN == 1) fill(200,100,50);
    if(TERRAIN == 2) fill(130);
+   if(TERRAIN == 3) noFill();
    //if(hover)fill(255,255,0); 
   
    PVector p = TileHelper.gridToPixel(X,Y);
@@ -59,7 +60,7 @@ class Tile{
   }
   
   boolean isPassable(){
-    return (TERRAIN != 2); 
+    return (TERRAIN != 2 && TERRAIN != 3); 
   }
   /////PATHFINDING JANK
   

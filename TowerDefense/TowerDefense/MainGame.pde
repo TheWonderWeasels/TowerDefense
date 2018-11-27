@@ -6,23 +6,78 @@ class MainGame {
   ArrayList<Entity> entities = new ArrayList<Entity>();
   ArrayList<Tower_Base> towers = new ArrayList<Tower_Base>();   //Towers array
 
-
+  Point spawnPoint = new Point(14,15);
+  Point goal = new Point(1,1);
   Point mouseP;
- 
+  boolean ready = false;
+  float spawnTimer = millis();
+  int[] currentWave = Waves.WAVES[0];
+  int waveIndex = 0;
+  int spawnIndex = 0;
   PImage bg = loadImage("bg_claytons.png");
   
   void update()
   {
+    if(ready)
+    {
+      if(millis() - spawnTimer > Waves.spawnDelay)
+      {
+       spawnEnemy();
+       spawnTimer = millis();
+      }
+    }
     for(Entity e:entities)
     {
       e.update();  
+      if(e.gridP.compare(goal))
+      {
+        e.delayDeath();
+      }
     }
     for(Tower_Base t:towers)
     {
      t.update(); 
     }
+    
+    for(int i = entities.size()-1; i >= 0; i--)
+    {
+      if(entities.get(i).isDead)
+      {
+       entities.remove(i); 
+      }
+    }
+    if(entities.size() == 0 && spawnIndex == currentWave.length)
+    {
+     spawnIndex = 0;
+     ready = false;
+     getNextWave();
+    }
+    
   }
   
+  void spawnEnemy()
+  {
+    if(currentWave != null)
+    {
+     if(spawnIndex < currentWave.length)
+     {
+       Entity e = new Entity(spawnPoint);
+       e.setTargetPosition(new Point(0,0));
+       e.setType(currentWave[spawnIndex]);
+       entities.add(e);
+       spawnIndex++;
+     }
+    }
+  }
+  
+  void getNextWave()
+  {
+   if(waveIndex + 1 < Waves.WAVES.length -1) 
+   {
+     waveIndex++;
+     currentWave = Waves.WAVES[waveIndex]; 
+   }
+  }
   void draw()
   {
     background(bg);
@@ -72,15 +127,14 @@ class MainGame {
     
     if(mouseP != null)
       {
+
         if(isOnGrid())
         {
           if(mouseButton == RIGHT)
           {
-           Entity e = new Entity(mouseP);
-           e.setTargetPosition(new Point(0,0));
-           entities.add(e);
+           ready = true;
           }
-          if(mouseButton == LEFT)
+          if(mouseButton == LEFT) // Selecting Tile/Spawning Turret
           {
             if (selectedTower!= null)
             {
