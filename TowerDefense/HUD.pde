@@ -187,6 +187,30 @@ class HUD {
     }
   }
 
+  void mouseReleased() {
+    mouseHoverColor = color(0, 255, 0, 25);
+    // ClayTower
+    if (overButton(840, 313, 50, 50)) {
+
+    }
+    // WoodTower
+    if (overButton(915, 313, 50, 50)) {
+
+    }
+    // StoneTower
+    if (overButton(990, 313, 50, 50)) {
+
+    }
+    // WaxTower
+    if (overButton(1065, 313, 50, 50)) {
+
+    }
+    // CrystalTower
+    if (overButton(1140, 313, 50, 50)) {
+
+    }
+  }
+
   /* Is the mouse hovering over the button area? */
   boolean overButton(int x, int y, int width, int height)
   {

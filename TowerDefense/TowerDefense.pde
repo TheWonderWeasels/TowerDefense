@@ -49,5 +49,6 @@ void mouseReleased() {
     break;
     case MAIN_GAME:
     mg.mouseReleased();
+    break;
   }
 }
