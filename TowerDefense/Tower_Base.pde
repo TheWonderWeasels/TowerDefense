@@ -2,8 +2,8 @@ class Tower_Base {
   Point gridP = new Point(); // Current Position;
   PVector pixelP = new PVector();
 
-  public float towerType = 1;//2 = wood, 3 = stone, 4 = wax, 5 = crystal
-  public float towerLevel = 1;
+  public int towerType = 1;//2 = wood, 3 = stone, 4 = wax, 5 = crystal
+  public int towerLevel = 1;
   public float towerRange = 200;
   public float towerDamage = 5;
   public float towerSpeed = 1;//attacks per second

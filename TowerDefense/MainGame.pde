@@ -37,7 +37,7 @@ class MainGame {
     //The two HUD rects
     fill(191);
     hud.drawTop();
-    hud.drawBottom();
+    hud.drawBottom(selectedTower);
 
     level.draw();
 
@@ -103,6 +103,7 @@ class MainGame {
                     }
                   } else {
                     tower.selected = false;
+                    println("Tower Deselected");
                   }
                 }
               }
