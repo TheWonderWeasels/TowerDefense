@@ -3,6 +3,9 @@ class Entity
   Point gridP = new Point(); // Current Position;
   Point gridT = new Point(); // target position;
 
+  float disTravelled = 0;
+  float speed = 1;
+  float baseSpeed = 1;
   int health = 5;
   boolean isDead = false;
   PVector pixelP = new PVector();
@@ -141,9 +144,10 @@ class Entity
     float snapThreshold = .3;
     PVector pixlT = level.getTileCenterAt(gridP);
     PVector diff = PVector.sub(pixlT, pixelP);
-    
-    pixelP.x += diff.x * .1;
-    pixelP.y += diff.y * .1;
+    disTravelled += diff.mag();
+    println(disTravelled);
+    pixelP.x += diff.x * .1 * speed;
+    pixelP.y += diff.y * .1 * speed;
     
     if (abs(diff.x) < snapThreshold) pixelP.x = pixlT.x;
     if (abs(diff.y) < snapThreshold) pixelP.y = pixlT.y;
