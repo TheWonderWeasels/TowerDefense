@@ -44,6 +44,7 @@ class HUD {
   color crystalColor = color(255);
   color mouseHoverColor = color(0, 255, 0, 25);
   color mouseClickColor = color(0, 0, 255, 25);
+  boolean claySelected = false;
 
   void drawTop() {
     fill(191);
@@ -60,8 +61,6 @@ class HUD {
 
     // Checking where the mouse is
     update(mouseX, mouseY);
-
-    fill(255);
 
     // ClayTower Button
     if(clayHover) {
@@ -116,8 +115,11 @@ class HUD {
     if (selectedTower != null && selectedTower.selected == true) {
     text(towerElem[selectedTower.towerType] + " Tower - Level " + selectedTower.towerLevel, 810, 423);
     }
-    else if (selectedTower != null && selectedTower.selected == false){
+    else if (selectedTower != null && selectedTower.selected == false) {
       text(" ", 810, 423);
+    }
+    else if (claySelected == true) {
+      text(towerElem[1] + " Tower", 810, 423);
     }
     textFont(bold, 16);
     text("Cost", 810, 473);
@@ -172,6 +174,7 @@ class HUD {
   void mousePressed() {
     if(clayHover) {
       mouseHoverColor = mouseClickColor;
+      println("I pushed the clay button");
     }
     if(woodHover) {
       mouseHoverColor = mouseClickColor;
@@ -191,7 +194,8 @@ class HUD {
     mouseHoverColor = color(0, 255, 0, 25);
     // ClayTower
     if (overButton(840, 313, 50, 50)) {
-
+      claySelected = true;
+      println("I released the clay button");
     }
     // WoodTower
     if (overButton(915, 313, 50, 50)) {

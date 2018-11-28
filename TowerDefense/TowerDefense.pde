@@ -38,6 +38,8 @@ void mousePressed() {
     sm.mousePressed();
     break;
     case MAIN_GAME:
+    mg.mousePressed();
+    break;
   }
 }
 
