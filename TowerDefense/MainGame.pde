@@ -10,34 +10,23 @@ class MainGame {
   Point mouseP;
 
   PImage bg = loadImage("bg_claytons.png");
-  HUD hud;
 
-  void update()
-  {
-    for(Entity e:entities)
-    {
+  void update() {
+    for(Entity e:entities) {
       e.update();
     }
-    for(Tower_Base t:towers)
-    {
+    for(Tower_Base t:towers) {
      t.update();
     }
   }
 
-  void draw()
-  {
+  void draw() {
     background(bg);
-    hud = new HUD();
 
     fill(255, 255, 255);
     noStroke();
     strokeWeight(0);
     rect(50, 50, 700, 700); // Play Space
-    
-    //The two HUD rects
-    fill(191);
-    hud.drawTop();
-    hud.drawBottom(selectedTower);
 
     level.draw();
 
@@ -65,10 +54,6 @@ class MainGame {
     else {
       mouseP = null;
     }      
-  }
-  
-  void mousePressed() {
-    hud.mousePressed();
   }
   
 // Merge with the other spawning code
@@ -116,18 +101,13 @@ class MainGame {
         }
       }
     }
-    else {
-      hud.mouseReleased();
-    }
   }
 
-  boolean isOnGrid()
-  {
+  boolean isOnGrid() {
     if(mouseX < 50) return false;
     if(mouseX > 50 * 15) return false;
     if(mouseY< 50) return false;
     if(mouseY > 50 * 15) return false;
     return true;
-
   }
 }
