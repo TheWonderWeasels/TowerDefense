@@ -6,6 +6,12 @@ class Point {
     this.x = x;
     this.y = y;
   }
+  
+  boolean compare(Point p)
+  {
+   if(p.x == this.x && p.y == this.y) return true;
+   return false;
+  }
   Point get(){
     return new Point(x, y); 
   }

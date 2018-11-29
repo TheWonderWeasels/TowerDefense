@@ -6,6 +6,7 @@ class MainGame {
   ArrayList<Entity> entities = new ArrayList<Entity>();
   ArrayList<Tower_Base> towers = new ArrayList<Tower_Base>();   //Towers array
 
+
   //tower aiming variables
   Entity lastE;//previous enemy in the array
   Entity currE;//current enemy in the array
@@ -14,20 +15,79 @@ class MainGame {
 
   Point mouseP;
 
+
+  Point spawnPoint = new Point(14,15);
+  Point goal = new Point(1,1);
+  Point mouseP;
+  boolean ready = false;
+  float spawnTimer = millis();
+  int[] currentWave = Waves.WAVES[0];
+  int waveIndex = 0;
+  int spawnIndex = 0;
   PImage bg = loadImage("bg_claytons.png");
 
   void update()
   {
-    for (Entity e : entities)
+    if(ready)
     {
-      e.update();
+      if(millis() - spawnTimer > Waves.spawnDelay)
+      {
+       spawnEnemy();
+       spawnTimer = millis();
+      }
+    }
+    for(Entity e:entities)
+    {
+      e.update();  
+      if(e.gridP.compare(goal))
+      {
+        e.delayDeath();
+      }
     }
     for (Tower_Base t : towers)
     {
       t.update();
     }
+    
+    for(int i = entities.size()-1; i >= 0; i--)
+    {
+      if(entities.get(i).isDead)
+      {
+       entities.remove(i); 
+      }
+    }
+    if(entities.size() == 0 && spawnIndex == currentWave.length)
+    {
+     spawnIndex = 0;
+     ready = false;
+     getNextWave();
+    }
+  }
+  
+  void spawnEnemy()
+  {
+    if(currentWave != null)
+    {
+     if(spawnIndex < currentWave.length)
+     {
+       Entity e = new Entity(spawnPoint);
+       e.setTargetPosition(new Point(0,0));
+       e.setType(currentWave[spawnIndex]);
+       entities.add(e);
+       spawnIndex++;
+     }
+    }
   }
 
+  void getNextWave()
+  {
+   if(waveIndex + 1 < Waves.WAVES.length -1) 
+   {
+     waveIndex++;
+     currentWave = Waves.WAVES[waveIndex]; 
+   }
+  }
+  
   void draw()
   {
     background(bg);
@@ -56,8 +116,7 @@ class MainGame {
       t.draw();
     }
 
-
-
+    // This should be in Update()
     if (entities.size() != 0) {
       for (int i = 0; i < towers.size(); i++) {
         ArrayList<Entity> inRange = new ArrayList<Entity>();//makes a new empty array
@@ -101,42 +160,39 @@ class MainGame {
   // Merge with the other spawning code
 
   void mouseReleased() {
-
-    if (mouseP != null)
-    {
-      if (isOnGrid())
+    if(mouseP != null)
       {
-        if (mouseButton == RIGHT)
+
+        if(isOnGrid())
         {
-          Entity e = new Entity(mouseP);
-          e.setTargetPosition(new Point(0, 0));
-          entities.add(e);
-        }
-        if (mouseButton == LEFT)
-        {
-          if (selectedTower!= null)
+          if(mouseButton == RIGHT)
           {
-            selectedTower.selected = false;
+           ready = true;
           }
-          Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
-          Tile tile = level.getTile(g);
-          //spawn a tower on current grid tile when mouse is pressed
-          if (tile != null) {
-            if (tile.TERRAIN == 2) {
-              for (int i = 0; i < towers.size(); i++) {
-                Tower_Base tower = towers.get(i);
-                if (tower.gridP.x == g.x) {
-                  if (tower.gridP.y == g.y) {
-                    selectedTower = tower;
-                    tower.selected = true;
-                    println("Tower Selected");
+          if(mouseButton == LEFT) // Selecting Tile/Spawning Turret
+          {
+            if (selectedTower!= null)
+            {
+              selectedTower.selected = false;
+            }
+            Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
+            Tile tile = level.getTile(g);
+            //spawn a tower on current grid tile when mouse is pressed
+            if (tile != null) {
+              if (tile.TERRAIN == 2) {
+                for (int i = 0; i < towers.size(); i++) {
+                  Tower_Base tower = towers.get(i);
+                  if (tower.gridP.x == g.x) {
+                    if (tower.gridP.y == g.y) {
+                      selectedTower = tower;
+                      tower.selected = true;
+                      println("Tower Selected");
+                    }
+                  } else {
+                    tower.selected = false;
                   }
-                } else {
-                  tower.selected = false;
                 }
               }
-            }
-
             if (tile.TERRAIN != 2) {
               Tower_Base newTower = new Tower_Base(g);
               towers.add(newTower);
@@ -148,7 +204,6 @@ class MainGame {
       }
     }
   }
-
   boolean isOnGrid()
   {
     if (mouseX < 50) return false;

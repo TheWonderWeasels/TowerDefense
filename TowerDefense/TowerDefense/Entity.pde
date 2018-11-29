@@ -4,14 +4,19 @@ class Entity
   Point gridT = new Point(); // target position;
 
   float disTravelled = 0;
-  float speed = 1;
+
+  float speed = 5;
   float baseSpeed = 1;
   float radius = 25;
+
+  float baseSpeed = 1;
+
   int health = 5;
+  int greyness = 0;
+  float timeToDie = 0;
   boolean isDead = false;
   PVector pixelP = new PVector();
   ArrayList<Tile> path;
-  
   boolean findPath = false;
   
   Entity(Point P) 
@@ -19,7 +24,7 @@ class Entity
     teleportTo(P);
     findPathAndTakeNextStep();
   }
- 
+  
   void draw()
   {
     noStroke();
@@ -27,7 +32,7 @@ class Entity
     ellipse(pixelP.x, pixelP.y, radius, radius);
     drawPath();
   }
-  /*
+  
   void teleportTo(Point gridP) {
     Tile tile = level.getTile(gridP);
     if (tile != null) {
@@ -42,58 +47,36 @@ class Entity
    this.gridT = gridT.get();
    findPath = true;
   }
+
   
-  void update()
+  void setType(int t)
   {
-   if(findPath == true) findPathAndTakeNextStep();
-   if(health <=0)
+   if(t == 1) // normal
    {
-    isDead = true;
-    return;
+     speed = 2;
+     health = 10;
+     greyness = 100;
    }
-   updateMove();
-  }
-  
-  void findPathAndTakeNextStep()
-  {
-   findPath = false;
-   Tile start = level.getTile(gridP);
-   Tile end = level.getTile(gridT);
-   if(start == end)
+   else if(t == 2) // fasty boi
    {
-    path = null;
-    return;
+     speed = 5;
+     health = 5;
+     greyness = 200;
    }
-   path = pathfinder.findPath(start,end);
-   
-   if(path != null && path.size() > 1)
+   else if(t == 3) // Tank
    {
-    Tile tile = path.get(1);
-    if(tile.isPassable()) gridP = new Point(tile.X, tile.Y);
+     speed = 1;
+     health = 10;
+     greyness = 10;
    }
   }
-  
-  void updateMove()
+  void draw()
   {
-   float snapThreshold = 1;
-   PVector pixelT = level.getTileCenterAt(gridP);
-   PVector diff = PVector.sub(pixelT,pixelP);
-   
-   pixelP.x += diff.x * 0.2;
-   pixelP.y += diff.y * 0.2;
-   
-   if(abs(diff.x) < snapThreshold) pixelP.x = pixelT.x;
-   if(abs(diff.y) < snapThreshold) pixelP.y = pixelT.y;
-   
-   if(pixelT.x == pixelP.x && pixelT.y == pixelP.y) {
-     findPath = true;
-     println("I am still finding");
-   } else {
-     //findPath = true;
-      println("I am not");
-   }
+    noStroke();
+    fill(greyness);
+    ellipse(pixelP.x, pixelP.y, 25, 25);
+    drawPath();
   }
-  */
   void drawPath() {
     if (path != null && path.size() > 1) {
       stroke(0);
@@ -121,7 +104,26 @@ class Entity
     this.gridT = gridT.get();
     findPath = true;
   }
+  
+  void delayDeath()
+  {
+    if(timeToDie == 0)
+    {
+       timeToDie = millis() + 500; 
+    }
+  }
   void update() {
+    if(timeToDie != 0)
+    {
+      if(millis() > timeToDie)
+      {
+        isDead = true;
+      }
+    }
+    if(health <= 0)
+    {
+     isDead = true; 
+    }
     if (findPath == true) findPathAndTakeNextStep();
     updateMove();
   }
