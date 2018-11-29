@@ -1,5 +1,6 @@
 class Entity
 {
+  MainGame mg;
   Point gridP = new Point(); // Current Position;
   Point gridT = new Point(); // target position;
 
@@ -38,19 +39,19 @@ class Entity
   {
    if(t == 1) // normal
    {
-     speed = 2;
+     speed = 15;
      health = 10;
      greyness = 100;
    }
    else if(t == 2) // fasty boi
    {
-     speed = 5;
+     speed = 30;
      health = 5;
      greyness = 200;
    }
    else if(t == 3) // Tank
    {
-     speed = 1;
+     speed = 7;
      health = 10;
      greyness = 10;
    }
@@ -127,8 +128,8 @@ class Entity
     PVector pixlT = level.getTileCenterAt(gridP);
     PVector diff = PVector.sub(pixlT, pixelP);
     disTravelled += diff.mag();
-    pixelP.x += diff.x * .1 * speed;
-    pixelP.y += diff.y * .1 * speed;
+    pixelP.x += diff.x * mg.deltaTime * speed;
+    pixelP.y += diff.y * mg.deltaTime * speed;
     
     if (abs(diff.x) < snapThreshold) pixelP.x = pixlT.x;
     if (abs(diff.y) < snapThreshold) pixelP.y = pixlT.y;
