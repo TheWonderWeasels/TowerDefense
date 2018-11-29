@@ -30,8 +30,6 @@ class MainGame {
       }
     }
       
-    
-  
     for(Entity e:entities)
     {
       e.update();  
@@ -93,11 +91,6 @@ class MainGame {
     strokeWeight(0);
     rect(50, 50, 700, 700); // Play Space
 
-    fill(210);
-    rect(800, 413-25, 430, 100);
-    fill(191);
-    rect(800, 50, 430, 338);
-    rect(800, 413, 430, 338);
     level.draw();
 
     mouseP = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
