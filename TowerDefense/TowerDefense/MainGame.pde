@@ -6,6 +6,16 @@ class MainGame {
   ArrayList<Entity> entities = new ArrayList<Entity>();
   ArrayList<Tower_Base> towers = new ArrayList<Tower_Base>();   //Towers array
 
+
+  //tower aiming variables
+  Entity lastE;//previous enemy in the array
+  Entity currE;//current enemy in the array
+  Entity furthestE;//enemy thats traveled the furthest
+
+
+  Point mouseP;
+
+
   Point spawnPoint = new Point(14,15);
   Point goal = new Point(1,1);
   Point mouseP;
@@ -15,7 +25,7 @@ class MainGame {
   int waveIndex = 0;
   int spawnIndex = 0;
   PImage bg = loadImage("bg_claytons.png");
-  
+
   void update()
   {
     if(ready)
@@ -34,9 +44,9 @@ class MainGame {
         e.delayDeath();
       }
     }
-    for(Tower_Base t:towers)
+    for (Tower_Base t : towers)
     {
-     t.update(); 
+      t.update();
     }
     
     for(int i = entities.size()-1; i >= 0; i--)
@@ -52,7 +62,6 @@ class MainGame {
      ready = false;
      getNextWave();
     }
-    
   }
   
   void spawnEnemy()
@@ -69,7 +78,7 @@ class MainGame {
      }
     }
   }
-  
+
   void getNextWave()
   {
    if(waveIndex + 1 < Waves.WAVES.length -1) 
@@ -78,6 +87,7 @@ class MainGame {
      currentWave = Waves.WAVES[waveIndex]; 
    }
   }
+  
   void draw()
   {
     background(bg);
@@ -96,35 +106,60 @@ class MainGame {
 
     mouseP = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
 
-    for(Entity e :entities)
+    for (Entity e : entities)
     {
       e.draw();
     }
-    
-    for(Tower_Base t:towers)
+
+    for (Tower_Base t : towers)
     {
-     t.draw(); 
+      t.draw();
     }
-    if(isOnGrid())
+
+    // This should be in Update()
+    if (entities.size() != 0) {
+      for (int i = 0; i < towers.size(); i++) {
+        ArrayList<Entity> inRange = new ArrayList<Entity>();//makes a new empty array
+        for (int j = 0; j < entities.size(); j++) {//fills the array with all enemies in range
+          if (towers.get(i).enemyInRange(entities.get(j))) {
+            inRange.add(entities.get(j));
+          }
+        }
+
+        if (inRange.size() != 0) {
+          lastE = inRange.get(0);
+          furthestE = inRange.get(0);
+          for (int f = 0; f < inRange.size(); f++) {//for all enemies in range, compare their distance travelled and save the one with the highest distance
+            currE = inRange.get(f);
+            if (currE.disTravelled > lastE.disTravelled) {
+              furthestE = currE;
+            }
+            lastE = currE;
+          }
+          towers.get(i).target = furthestE;
+        }
+      }
+    }
+
+
+    if (isOnGrid())
     {
       //print(mouseP.x + " " + mouseP.y + "\n");
       Tile tile = level.getTile(mouseP);
-      if(tile != null)
+      if (tile != null)
       {
         tile.hover = true;
-        stroke(255,0,0);
+        stroke(255, 0, 0);
         strokeWeight(3);
         noFill();
-        rect(TileHelper.gridToPixel(mouseP).x, TileHelper.gridToPixel(mouseP).y, 50,50);
+        rect(TileHelper.gridToPixel(mouseP).x, TileHelper.gridToPixel(mouseP).y, 50, 50);
       }
-    }
-    else
+    } else
       mouseP = null;
   }
-// Merge with the other spawning code
+  // Merge with the other spawning code
 
   void mouseReleased() {
-    
     if(mouseP != null)
       {
 
@@ -158,7 +193,6 @@ class MainGame {
                   }
                 }
               }
-      
             if (tile.TERRAIN != 2) {
               Tower_Base newTower = new Tower_Base(g);
               towers.add(newTower);
@@ -170,14 +204,12 @@ class MainGame {
       }
     }
   }
-  
   boolean isOnGrid()
   {
-    if(mouseX < 50) return false;
-    if(mouseX > 50 * 15) return false;
-    if(mouseY< 50) return false;
-    if(mouseY > 50 * 15) return false;
+    if (mouseX < 50) return false;
+    if (mouseX > 50 * 15) return false;
+    if (mouseY< 50) return false;
+    if (mouseY > 50 * 15) return false;
     return true;
-
   }
 }

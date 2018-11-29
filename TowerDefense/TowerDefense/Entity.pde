@@ -4,8 +4,13 @@ class Entity
   Point gridT = new Point(); // target position;
 
   float disTravelled = 0;
+
   float speed = 5;
   float baseSpeed = 1;
+  float radius = 25;
+
+  float baseSpeed = 1;
+
   int health = 5;
   int greyness = 0;
   float timeToDie = 0;
@@ -19,6 +24,30 @@ class Entity
     teleportTo(P);
     findPathAndTakeNextStep();
   }
+  
+  void draw()
+  {
+    noStroke();
+    fill(0);
+    ellipse(pixelP.x, pixelP.y, radius, radius);
+    drawPath();
+  }
+  
+  void teleportTo(Point gridP) {
+    Tile tile = level.getTile(gridP);
+    if (tile != null) {
+      this.gridP = gridP.get();
+      this.gridT = gridP.get();
+      this.pixelP = tile.getCenter();
+    }
+  }
+  
+  void setTargetPosition(Point gridT)
+  {
+   this.gridT = gridT.get();
+   findPath = true;
+  }
+
   
   void setType(int t)
   {

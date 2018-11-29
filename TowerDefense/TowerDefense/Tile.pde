@@ -43,6 +43,7 @@ class Tile{
    if(TERRAIN == 0) fill(200,100,50);
    if(TERRAIN == 1) fill(200,100,50);
    if(TERRAIN == 2) fill(130);
+
    if(TERRAIN == 3) noFill();
    //if(hover)fill(255,255,0); 
   
