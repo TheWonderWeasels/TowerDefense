@@ -1,4 +1,5 @@
 class Tower_Base {
+  MainGame mg;
   Point gridP = new Point(); // Current Position;
   PVector pixelP = new PVector();
 
@@ -15,6 +16,11 @@ class Tower_Base {
   
   public Entity target;
 
+  //tower aiming variables
+  Entity lastE;//previous enemy in the array
+  Entity currE;//current enemy in the array
+  Entity furthestE;//enemy thats traveled the furthest
+  
   Tower_Base(Point P) {
     teleportTo(P);
   }
@@ -38,6 +44,29 @@ class Tower_Base {
   }
   void update()
   {
+    if (mg.entities.size() != 0) {
+        ArrayList<Entity> inRange = new ArrayList<Entity>();//makes a new empty array
+        for (int j = 0; j < mg.entities.size(); j++) {//fills the array with all enemies in range
+          if (enemyInRange(mg.entities.get(j))) {
+            inRange.add(mg.entities.get(j));
+          }
+        }
+
+        if (inRange.size() != 0) {
+          lastE = inRange.get(0);
+          furthestE = inRange.get(0);
+          for (int f = 0; f < inRange.size(); f++) {//for all enemies in range, compare their distance travelled and save the one with the highest distance
+            currE = inRange.get(f);
+            if (currE.disTravelled > lastE.disTravelled) {
+              furthestE = currE;
+            }
+            lastE = currE;
+          }
+          target = furthestE;
+        }
+      
+    }
+    println(mg.entities.size());
   }
 
   boolean enemyInRange(Entity enemy) {
