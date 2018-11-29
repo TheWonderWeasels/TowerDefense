@@ -27,7 +27,7 @@ class Entity
   void draw()
   {
     noStroke();
-    fill(0);
+    fill(greyness);
     ellipse(pixelP.x, pixelP.y, radius, radius);
     drawPath();
   }
