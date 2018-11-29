@@ -35,7 +35,6 @@ void draw(){
 }
 
 void mousePressed() {
-
   switch(gameState){
     case START_MENU:
     sm.mousePressed();

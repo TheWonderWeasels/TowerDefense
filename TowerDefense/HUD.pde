@@ -25,12 +25,11 @@ class HUD {
   PFont main = createFont("Comfortaa-Regular.ttf", 64);
 
   String[] difficultyLvl = {"Easy", "Medium", "Hard"};
-  int natEnergyCurrent = 232;
-  int pollutionLevelCurrent = 72;
-  int currentRound = 10;
-  int totalRounds = 50;
+  int natEnergyCurrent = 0;
+  int pollutionLevelCurrent = 0;
+  int currentRound = 0;
+  int totalRounds = 30;
   String[] towerElem = {"Clay", "Wood", "Stone", "Wax", "Crystal"};
-  int towerLevel = 1;
 
   boolean clayHover = false;
   boolean woodHover = false;
@@ -49,22 +48,44 @@ class HUD {
   boolean stoneSelected = false;
   boolean waxSelected = false;
   boolean crystalSelected = false;
+  
+  int clayBasePrice = 10;
+  float clayDamage = 5;
+  float claySpeed = 1;
+  float clayRange = 200;
+  int woodBasePrice = 50;
+  float woodDamage = 10;
+  float woodSpeed = 2;
+  float woodRange = 150;
+  int stoneBasePrice = 100;
+  float stoneDamage = 15;
+  float stoneSpeed = 1;
+  float stoneRange = 250;
+  int waxBasePrice = 150;
+  float waxDamage = 0;
+  float waxSpeed = 5;
+  float waxRange = 50;
+  int crystalBasePrice = 500;
+  float crystalDamage = 50;
+  float crystalSpeed = 10;
+  float crystalRange = 500;
 
   void draw(Tower_Base selectedTower) {
     noStroke();
     
     /* THE TOP AREA */
-    fill(191);
+    fill(196, 221, 210);
     rect(800,50,430,338);
-    fill(0);
+    
+    fill(1, 16, 27);
     textAlign(LEFT, TOP);
     textFont(bold, 20);
-    text("Defense of the Ancient Tree - " + difficultyLvl[1], 810, 60);
+    text("Defense of the Ancient Tree - " + difficultyLvl[0], 810, 60);
 
     textFont(main, 16);
-    text("Nature Energy : " + natEnergyCurrent, 810, 90);
-    text("Pollution Levels : " + pollutionLevelCurrent + "%", 810, 115);
-    text("Current Round : " + currentRound + "/" + totalRounds, 810, 140);
+    text("Nature Energy : " + natEnergyCurrent, 810, 100);
+    text("Pollution Levels : " + pollutionLevelCurrent + "%", 810, 125);
+    text("Current Round : " + currentRound + "/" + totalRounds, 810, 150);
 
     // Checking where the mouse is
     update(mouseX, mouseY);
@@ -111,39 +132,142 @@ class HUD {
     rect(1140, 313, 50, 50);
 
     /* THE BOTTOM AREA */
-    fill(191);
+    fill(196, 221, 210);
     rect(800,413,430,338);
 
-    fill(0);
+    fill(1, 16, 27);
     textAlign(LEFT, TOP);
     textFont(bold, 20);
-    if (selectedTower != null && selectedTower.selected == false) {
-      text(" ", 810, 423);
-    }
-    else if (selectedTower != null && selectedTower.selected == true) {
-    text(towerElem[selectedTower.towerType] + " Tower - Level " + selectedTower.towerLevel, 810, 423);
+    if (selectedTower != null && selectedTower.selected == true) {
+      text(towerElem[selectedTower.towerType] + " Tower - Level " + selectedTower.towerLevel, 810, 423);
+      // Titles
+      textFont(bold, 16);
+      text("Current", 915, 473);
+      text("Next Level", 1065, 473);
+      textAlign(CENTER, TOP);
+      text("Sell [" + "CREATEPRICE" + "]", 1015, 625);
+      text("Upgrade [" + "IDK" + "]", 1015, 675);
+      // Stats
+      textAlign(LEFT, TOP);
+      textFont(main, 16);
+      text("Damage:", 810, 503);
+      text("Speed:", 810, 533);
+      text("Range:", 810, 563);
+      text(int(selectedTower.towerDamage), 915, 503);
+      text(int(selectedTower.towerDamage)*5, 1065, 503);
+      text(int(selectedTower.towerSpeed), 915, 533);
+      text(int(selectedTower.towerSpeed)*5, 1065, 533);
+      text(int(selectedTower.towerRange), 915, 563);
+      text(int(selectedTower.towerRange)*5, 1065, 563);
     }
     else if (claySelected == true) {
       text(towerElem[0] + " Tower", 810, 423);
+      // Titles
+      textFont(bold, 16);
+      text("Current", 915, 473);
+      text("Next Level", 1065, 473);
+      textAlign(CENTER, TOP);
+      text("Cost [" + clayBasePrice + "]", 1015, 625);
+      // Stats
+      textAlign(LEFT, TOP);
+      textFont(main, 16);
+      text("Damage:", 810, 503);
+      text("Speed:", 810, 533);
+      text("Range:", 810, 563);
+      text(int(clayDamage), 915, 503);
+      text(int(clayDamage)*5, 1065, 503);
+      text(int(claySpeed), 915, 533);
+      text(int(claySpeed)*5, 1065, 533);
+      text(int(clayRange), 915, 563);
+      text(int(clayRange)*5, 1065, 563);
     }
     else if (woodSelected == true) {
       text(towerElem[1] + " Tower", 810, 423);
+      // Titles
+      textFont(bold, 16);
+      text("Current", 915, 473);
+      text("Next Level", 1065, 473);
+      textAlign(CENTER, TOP);
+      text("Cost [" + woodBasePrice + "]", 1015, 625);
+      // Stats
+      textAlign(LEFT, TOP);
+      textFont(main, 16);
+      text("Damage:", 810, 503);
+      text("Speed:", 810, 533);
+      text("Range:", 810, 563);
+      text(int(woodDamage), 915, 503);
+      text(int(woodDamage)*5, 1065, 503);
+      text(int(woodSpeed), 915, 533);
+      text(int(woodSpeed)*5, 1065, 533);
+      text(int(woodRange), 915, 563);
+      text(int(woodRange)*5, 1065, 563);
     }
     else if (stoneSelected == true) {
       text(towerElem[2] + " Tower", 810, 423);
+      // Titles
+      textFont(bold, 16);
+      text("Current", 915, 473);
+      text("Next Level", 1065, 473);
+      textAlign(CENTER, TOP);
+      text("Cost [" + stoneBasePrice + "]", 1015, 625);
+      // Stats
+      textAlign(LEFT, TOP);
+      textFont(main, 16);
+      text("Damage:", 810, 503);
+      text("Speed:", 810, 533);
+      text("Range:", 810, 563);
+      text(int(stoneDamage), 915, 503);
+      text(int(stoneDamage)*5, 1065, 503);
+      text(int(stoneSpeed), 915, 533);
+      text(int(stoneSpeed)*5, 1065, 533);
+      text(int(stoneRange), 915, 563);
+      text(int(stoneRange)*5, 1065, 563);
     }
     else if (waxSelected == true) {
       text(towerElem[3] + " Tower", 810, 423);
+      // Titles
+      textFont(bold, 16);
+      text("Current", 915, 473);
+      text("Next Level", 1065, 473);
+      textAlign(CENTER, TOP);
+      text("Cost [" + waxBasePrice + "]", 1015, 625);
+      // Stats
+      textAlign(LEFT, TOP);
+      textFont(main, 16);
+      text("Damage:", 810, 503);
+      text("Speed:", 810, 533);
+      text("Range:", 810, 563);
+      text(int(waxDamage), 915, 503);
+      text(int(waxDamage)*5, 1065, 503);
+      text(int(waxSpeed), 915, 533);
+      text(int(waxSpeed)*5, 1065, 533);
+      text(int(waxRange), 915, 563);
+      text(int(waxRange)*5, 1065, 563);
     }
     else if (crystalSelected == true) {
       text(towerElem[4] + " Tower", 810, 423);
+      // Titles
+      textFont(bold, 16);
+      text("Current", 915, 473);
+      text("Next Level", 1065, 473);
+      textAlign(CENTER, TOP);
+      text("Cost [" + crystalBasePrice + "]", 1015, 625);
+      // Stats
+      textAlign(LEFT, TOP);
+      textFont(main, 16);
+      text("Damage:", 810, 503);
+      text("Speed:", 810, 533);
+      text("Range:", 810, 563);
+      text(int(crystalDamage), 915, 503);
+      text(int(crystalDamage)*5, 1065, 503);
+      text(int(crystalSpeed), 915, 533);
+      text(int(crystalSpeed)*5, 1065, 533);
+      text(int(crystalRange), 915, 563);
+      text(int(crystalRange)*5, 1065, 563);
     }
     else {
       text(" ", 810, 423);
     }
-    textFont(bold, 16);
-    text("Cost", 810, 473);
-    text("Resell", 1015, 473);
   }
 
   /* This class checks where the mouse is, with certain areas being
