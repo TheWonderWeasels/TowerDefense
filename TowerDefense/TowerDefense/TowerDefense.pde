@@ -5,6 +5,7 @@ final int MAIN_GAME = 1;
 
 StartMenu sm;
 MainGame mg;
+HUD hud;
 Level level;
 PathFinder pathfinder;
 
@@ -12,6 +13,7 @@ void setup() {
   size(1280, 800);
   sm = new StartMenu();
   mg = new MainGame();
+  hud = new HUD();
   TileHelper.app = this;
   level = new Level();
   pathfinder = new PathFinder();
@@ -27,17 +29,19 @@ void draw(){
     //mg.setup();
     mg.update();
     mg.draw();
+    hud.draw(mg.selectedTower);
     break;
   }
 }
 
 void mousePressed() {
-
   switch(gameState){
     case START_MENU:
     sm.mousePressed();
     break;
     case MAIN_GAME:
+    hud.mousePressed();
+    break;
   }
 }
 
@@ -49,5 +53,7 @@ void mouseReleased() {
     break;
     case MAIN_GAME:
     mg.mouseReleased();
+    hud.mouseReleased();
+    break;
   }
 }
