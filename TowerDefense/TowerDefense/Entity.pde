@@ -9,7 +9,6 @@ class Entity
   float baseSpeed = 1;
   float radius = 25;
 
-  float baseSpeed = 1;
 
   int health = 5;
   int greyness = 0;
@@ -33,20 +32,6 @@ class Entity
     drawPath();
   }
   
-  void teleportTo(Point gridP) {
-    Tile tile = level.getTile(gridP);
-    if (tile != null) {
-      this.gridP = gridP.get();
-      this.gridT = gridP.get();
-      this.pixelP = tile.getCenter();
-    }
-  }
-  
-  void setTargetPosition(Point gridT)
-  {
-   this.gridT = gridT.get();
-   findPath = true;
-  }
 
   
   void setType(int t)
@@ -70,13 +55,7 @@ class Entity
      greyness = 10;
    }
   }
-  void draw()
-  {
-    noStroke();
-    fill(greyness);
-    ellipse(pixelP.x, pixelP.y, 25, 25);
-    drawPath();
-  }
+  
   void drawPath() {
     if (path != null && path.size() > 1) {
       stroke(0);

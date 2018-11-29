@@ -7,13 +7,6 @@ class MainGame {
   ArrayList<Tower_Base> towers = new ArrayList<Tower_Base>();   //Towers array
 
 
-  //tower aiming variables
-  Entity lastE;//previous enemy in the array
-  Entity currE;//current enemy in the array
-  Entity furthestE;//enemy thats traveled the furthest
-
-
-  Point mouseP;
 
 
   Point spawnPoint = new Point(14,15);
@@ -36,6 +29,7 @@ class MainGame {
        spawnTimer = millis();
       }
     }
+      
     for(Entity e:entities)
     {
       e.update();  
@@ -97,11 +91,6 @@ class MainGame {
     strokeWeight(0);
     rect(50, 50, 700, 700); // Play Space
 
-    fill(210);
-    rect(800, 413-25, 430, 100);
-    fill(191);
-    rect(800, 50, 430, 338);
-    rect(800, 413, 430, 338);
     level.draw();
 
     mouseP = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
@@ -115,33 +104,7 @@ class MainGame {
     {
       t.draw();
     }
-
-    // This should be in Update()
-    if (entities.size() != 0) {
-      for (int i = 0; i < towers.size(); i++) {
-        ArrayList<Entity> inRange = new ArrayList<Entity>();//makes a new empty array
-        for (int j = 0; j < entities.size(); j++) {//fills the array with all enemies in range
-          if (towers.get(i).enemyInRange(entities.get(j))) {
-            inRange.add(entities.get(j));
-          }
-        }
-
-        if (inRange.size() != 0) {
-          lastE = inRange.get(0);
-          furthestE = inRange.get(0);
-          for (int f = 0; f < inRange.size(); f++) {//for all enemies in range, compare their distance travelled and save the one with the highest distance
-            currE = inRange.get(f);
-            if (currE.disTravelled > lastE.disTravelled) {
-              furthestE = currE;
-            }
-            lastE = currE;
-          }
-          towers.get(i).target = furthestE;
-        }
-      }
-    }
-
-
+    
     if (isOnGrid())
     {
       //print(mouseP.x + " " + mouseP.y + "\n");
@@ -157,12 +120,10 @@ class MainGame {
     } else
       mouseP = null;
   }
-  // Merge with the other spawning code
 
   void mouseReleased() {
     if(mouseP != null)
       {
-
         if(isOnGrid())
         {
           if(mouseButton == RIGHT)
@@ -195,6 +156,7 @@ class MainGame {
               }
             if (tile.TERRAIN != 2) {
               Tower_Base newTower = new Tower_Base(g);
+              newTower.mg = this;
               towers.add(newTower);
               tile.TERRAIN = 2;//updates the pathfinding grid with the tower
               println("Tower Created" + " ");

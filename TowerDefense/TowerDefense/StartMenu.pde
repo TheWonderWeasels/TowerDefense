@@ -44,6 +44,7 @@ class StartMenu {
     
     // Background Visuals
     background(bg);
+    noStroke();
     image(title, 266, 43);
     
     // Start Game Button
