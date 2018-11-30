@@ -3,7 +3,7 @@ class Tower_Base {
   Point gridP = new Point(); // Current Position;
   PVector pixelP = new PVector();
 
-  public int towerType = 0;//2 = wood, 3 = stone, 4 = wax, 5 = crystal
+  public int towerType = 0; // 0 = clay, 1 = wood, 2 = stone, 3 = wax, 4 = crystal
   public int towerLevel = 1;
   public float towerRange = 100;
   public float towerDamage = 5;

@@ -31,16 +31,21 @@ class HUD {
   int totalRounds = 30;
   String[] towerElem = {"Clay", "Wood", "Stone", "Wax", "Crystal"};
 
+  PImage clayIcon = loadImage("clay01.png");
+  PImage woodIcon = loadImage("wood01.png");
+  PImage stoneIcon = loadImage("stone01.png");
+  PImage waxIcon = loadImage("wax01.png");
+  PImage crystalIcon = loadImage("crystal01.png");
   boolean clayHover = false;
   boolean woodHover = false;
   boolean stoneHover = false;
   boolean waxHover = false;
   boolean crystalHover = false;
-  color clayColor = color(255);
-  color woodColor = color(255);
-  color stoneColor = color(255);
-  color waxColor = color(255);
-  color crystalColor = color(255);
+  color clayColor = color(255, 0);
+  color woodColor = color(255, 0);
+  color stoneColor = color(255, 0);
+  color waxColor = color(255, 0);
+  color crystalColor = color(255, 0);
   color mouseHoverColor = color(0, 255, 0, 25);
   color mouseClickColor = color(0, 0, 255, 25);
   boolean claySelected = false;
@@ -97,7 +102,9 @@ class HUD {
     else {
       fill(clayColor);
     }
+    image(clayIcon, 840, 313);
     rect(840, 313, 50, 50);
+    
     // WoodTower Button
     if(woodHover) {
       fill(mouseHoverColor);
@@ -105,7 +112,9 @@ class HUD {
     else {
       fill(woodColor);
     }
+    image(woodIcon, 915, 313);
     rect(915, 313, 50, 50);
+    
     // StoneTower Button
     if(stoneHover) {
       fill(mouseHoverColor);
@@ -113,7 +122,9 @@ class HUD {
     else {
       fill(stoneColor);
     }
+    image(stoneIcon, 990, 313);
     rect(990, 313, 50, 50);
+    
     // WaxTower Button
     if(waxHover) {
       fill(mouseHoverColor);
@@ -121,7 +132,9 @@ class HUD {
     else {
       fill(waxColor);
     }
+    image(waxIcon, 1065, 313);
     rect(1065, 313, 50, 50);
+    
     // CrystalTower Button
     if(crystalHover) {
       fill(mouseHoverColor);
@@ -129,6 +142,7 @@ class HUD {
     else {
       fill(crystalColor);
     }
+    image(crystalIcon, 1140, 313);
     rect(1140, 313, 50, 50);
 
     /* THE BOTTOM AREA */

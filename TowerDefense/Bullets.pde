@@ -1,7 +1,7 @@
 class Bullets {
   MainGame mg;
   
-  float bulletType = 1;//1 = clay, 2 = wood, 3 = stone, 4 = wax, 5 = crystal
+  float bulletType = 1; // 1 = clay, 2 = wood, 3 = stone, 4 = wax, 5 = crystal
   
   float bulletX = 0;
   float bulletY = 0;
