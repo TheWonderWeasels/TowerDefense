@@ -4,6 +4,7 @@ class Sprite {
   PImage[] images;
   int imageCount;
   int frame;
+  int counter = 0;
  
   Sprite(String imagePrefix, int count) {
     imageCount = count;
@@ -14,9 +15,19 @@ class Sprite {
     }
   }
   
-  void display() {
-    frame = (frame+1) % 3;
-    image(images[frame], -25, -25);
+  void update() {
+    counter++;
+    if(counter >= 6) {
+      frame++;
+      if(frame >= 3) {
+        frame = 0;
+      }
+      counter = 0;
+    }
+  }
+  
+  void display(float xpos, float ypos) {
+    image(images[frame], xpos, ypos);
   }
   
 }
