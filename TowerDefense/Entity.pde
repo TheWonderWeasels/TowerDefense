@@ -12,11 +12,14 @@ class Entity
 
   int health = 5;
   int greyness = 0;
+  int eType = 0;
   float timeToDie = 0;
   boolean isDead = false;
   PVector pixelP = new PVector();
   ArrayList<Tile> path;
   boolean findPath = false;
+  
+  Sprite enemyNormal, enemyBig, enemyTall;
   
   Entity(Point P) 
   {
@@ -27,31 +30,49 @@ class Entity
   void draw()
   {
     noStroke();
-    fill(greyness);
-    ellipse(pixelP.x, pixelP.y, radius, radius);
+    //fill(greyness);
+    enemyNormal.update();
+    enemyTall.update();
+    enemyBig.update();
+    if(eType == 1) {
+      enemyNormal.display(pixelP.x-25, pixelP.y-25);
+    }
+    if(eType == 2) {
+      enemyTall.display(pixelP.x-25, pixelP.y-25);
+    }
+    if(eType == 3) {
+      enemyBig.display(pixelP.x-25, pixelP.y-25);
+    }
+    //ellipse(pixelP.x, pixelP.y, radius, radius);
     drawPath();
   }
   
-
-  
   void setType(int t)
-  {
+  { 
+   enemyNormal = new Sprite("EnemyNormal_", 3);
+   enemyBig = new Sprite("EnemyBig_", 3);
+   enemyTall = new Sprite("EnemyTall_", 3);
    if(t == 1) // normal
    {
      speed = 2;
      health = 10;
+
+     eType = 1;
      greyness = 100;
    }
    else if(t == 2) // fasty boi
    {
      speed = 5;
      health = 5;
+
+     eType = 2;
      greyness = 200;
    }
    else if(t == 3) // Tank
    {
      speed = 1;
      health = 10;
+     eType = 3;
      greyness = 10;
    }
   }
