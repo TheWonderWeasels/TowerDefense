@@ -7,11 +7,12 @@ class Tower_Base {
   public int towerLevel = 1;
   public float towerRange = 100;
   public float towerDamage = 5;
-  public float towerSpeed = 1;//attacks per second
+  public float towerSpeed = 1;//Time Between Tower Attacks
   public float towerAngle = 0;
+  public float attackTimer = 1;
 
   public float towerRotation = 0;
-
+  public boolean isDead = false;
   public boolean selected = false;
   
   public Entity target;
@@ -44,6 +45,12 @@ class Tower_Base {
   }
   void update()
   {
+    attackTimerCount();
+    lastE = null;//previous enemy in the array
+    currE = null;//current enemy in the array
+    furthestE = null;//enemy thats traveled the furthest
+    target = null;
+    
     if (mg.entities.size() != 0) {
         ArrayList<Entity> inRange = new ArrayList<Entity>();//makes a new empty array
         for (int j = 0; j < mg.entities.size(); j++) {//fills the array with all enemies in range
@@ -66,7 +73,6 @@ class Tower_Base {
         }
       
     }
-    println(mg.entities.size());
   }
 
   boolean enemyInRange(Entity enemy) {
@@ -80,7 +86,6 @@ class Tower_Base {
     float distance = sqrt( ((enemyX - towerX)*(enemyX - towerX)) + ((enemyY - towerY)*(enemyY - towerY)));
 
     if (distance <= towerR + enemyR) {
-      println("Enemy in range");
       return true;
     } else {
       return false;
@@ -98,9 +103,27 @@ class Tower_Base {
       float yDis = towerY - enemyY;
 
       towerAngle = atan2(yDis, xDis);
+      
+       if(attackTimer <= 0) {
+        shoot();
+        attackTimer = towerSpeed;
+      }
     }
   }
 
+ void shoot(){
+    Bullets b = new Bullets();
+    b.mg = mg;
+    b.setStats(this.pixelP.x, this.pixelP.y, this.target.pixelP.x, this.target.pixelP.y, this.towerType);
+    mg.bullets.add(b);
+    println("Pew Pew");
+  }
+  
+   void attackTimerCount() {
+    attackTimer -= mg.deltaTime;
+    if (attackTimer < 0) attackTimer = 0;
+  }
+  
   void teleportTo(Point gridP) {
     Tile tile = level.getTile(gridP);
     if (tile != null) {

@@ -5,7 +5,7 @@ class MainGame {
   Tower_Base selectedTower;
   ArrayList<Entity> entities = new ArrayList<Entity>();
   ArrayList<Tower_Base> towers = new ArrayList<Tower_Base>();   //Towers array
-
+  ArrayList<Bullets> bullets = new ArrayList<Bullets>(); // bulletsArray
 
 
 
@@ -19,8 +19,13 @@ class MainGame {
   int spawnIndex = 0;
   PImage bg = loadImage("bg_claytons.png");
 
+  float deltaTime = 0;
+  float currTime = 0;
+  float prevTime = 0;
+  
   void update()
   {
+    getDeltaTime();
     if(ready)
     {
       if(millis() - spawnTimer > Waves.spawnDelay)
@@ -29,7 +34,7 @@ class MainGame {
        spawnTimer = millis();
       }
     }
-      
+    // Updating Things  
     for(Entity e:entities)
     {
       e.update();  
@@ -41,6 +46,24 @@ class MainGame {
     for (Tower_Base t : towers)
     {
       t.update();
+    }
+    for(Bullets b: bullets)
+    {
+      b.update();
+    }
+    // Removing dead things from lists
+    for (int i = bullets.size()-1 ; i >= 0 ; i--){
+      if(bullets.get(i).isDead) {
+        bullets.remove(i);
+        println("Bullet Died");
+      }
+    }
+    
+    for (int i = towers.size()-1 ; i >= 0 ; i--){
+      if(towers.get(i).isDead) {
+        towers.remove(i);
+        println("Bullet Died");
+      }
     }
     
     for(int i = entities.size()-1; i >= 0; i--)
@@ -67,6 +90,7 @@ class MainGame {
        Entity e = new Entity(spawnPoint);
        e.setTargetPosition(new Point(0,0));
        e.setType(currentWave[spawnIndex]);
+       e.mg = this;
        entities.add(e);
        spawnIndex++;
      }
@@ -105,6 +129,10 @@ class MainGame {
       t.draw();
     }
     
+    for (Bullets b : bullets) {
+      b.draw();
+    }
+    
     if (isOnGrid())
     {
       //print(mouseP.x + " " + mouseP.y + "\n");
@@ -121,6 +149,11 @@ class MainGame {
       mouseP = null;
   }
 
+  void getDeltaTime() {
+    currTime = millis();
+    deltaTime = (currTime - prevTime)/1000;
+    prevTime = currTime;
+  }
   void mouseReleased() {
     if(mouseP != null)
       {
