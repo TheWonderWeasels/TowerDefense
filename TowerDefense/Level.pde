@@ -164,6 +164,14 @@ class Level {
             getTile(X, Y+1)
           }
           );
+          
+          tiles[Y][X].addDiagNeighbors(new Tile[] {
+            getTile(X-1, Y-1), 
+            getTile(X+1, Y+1), 
+            getTile(X+1, Y-1), 
+            getTile(X-1, Y+1)
+          }
+          );
           if (useDiagonals) {
             tiles[Y][X].addNeighbors(new Tile[] {
               getTile(X-1, Y-1), 

@@ -55,19 +55,19 @@ class Entity
    enemyTall = new Sprite("EnemyTall_", 3);
    if(t == 1) // normal
    {
-     speed = 2;
+     speed = 6;
      health = 10;
      eType = 1;
    }
    else if(t == 2) // fasty boi
    {
-     speed = 5;
+     speed = 10;
      health = 5;
      eType = 2;
    }
    else if(t == 3) // Tank
    {
-     speed = 1;
+     speed = 4;
      health = 10;
      eType = 3;
    }
@@ -136,6 +136,55 @@ class Entity
     if (path != null && path.size() > 1) { 
       Tile tile = path.get(1);
       if(tile.isPassable()) gridP = new Point(tile.X, tile.Y);
+      else
+      {
+       println("Path Blocked"); 
+       if(tile.TERRAIN != 3)
+       {
+         PollutionBomb(); 
+       }
+      }
+    }
+  }
+  
+  void PollutionBomb()
+  {
+    // Get GridP
+    // Collect all neighbors
+    // Loop through the neighbors and compare their GridP to the X and Y of the tile
+    // If it matches, destroy it
+    // Set the TERRAIN of the tile to 4
+    Tile currentTile = level.getTile(gridP);
+    for(Tile t:currentTile.neighbors)
+    {
+      if(t.TERRAIN !=3)
+      {
+        t.TERRAIN = 4;
+        Point p = new Point(t.X,t.Y);
+        for(Tower_Base to: mg.towers)
+        {
+          if(to.gridP.compare(p))
+          {
+            to.isDead = true;
+          }
+        }
+      }
+    }
+    
+    for(Tile t:currentTile.diagNeighbors)
+    {
+      if(t.TERRAIN != 3)
+      {
+        t.TERRAIN = 4;
+        Point p = new Point(t.X,t.Y);
+        for(Tower_Base to: mg.towers)
+        {
+          if(to.gridP.compare(p))
+          {
+            to.isDead = true;
+          }
+        }
+      }
     }
   }
   void updateMove() {

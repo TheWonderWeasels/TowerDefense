@@ -39,7 +39,6 @@ class Bullets {
     targetX = eX;
     targetY = eY;
     bulletAngle = atan2((eY-sY),(eX-sX));
-    println(bulletAngle * PI * 180);
     velocity.x = cos(bulletAngle);
     velocity.y = sin(bulletAngle);
     

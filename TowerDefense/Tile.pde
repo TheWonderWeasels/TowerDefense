@@ -45,6 +45,7 @@ class Tile{
    if(TERRAIN == 2) fill(130);
 
    if(TERRAIN == 3) noFill();
+   if(TERRAIN == 4) fill(27,2,69);
    //if(hover)fill(255,255,0); 
   
    PVector p = TileHelper.gridToPixel(X,Y);
@@ -66,6 +67,7 @@ class Tile{
   /////PATHFINDING JANK
   
   ArrayList<Tile> neighbors = new ArrayList<Tile>();
+  ArrayList<Tile> diagNeighbors = new ArrayList<Tile>();
   Tile parent;
   float G;
   float F;
@@ -75,6 +77,14 @@ class Tile{
    for (Tile t:tiles)
    {
     if(t != null) neighbors.add(t); 
+   }
+  }
+  
+  void addDiagNeighbors(Tile[] tiles)
+  {
+   for (Tile t:tiles)
+   {
+    if(t != null) diagNeighbors.add(t); 
    }
   }
   

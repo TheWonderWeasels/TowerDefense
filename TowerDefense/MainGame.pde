@@ -55,7 +55,7 @@ class MainGame {
     for (int i = bullets.size()-1 ; i >= 0 ; i--){
       if(bullets.get(i).isDead) {
         bullets.remove(i);
-        println("Bullet Died");
+        //println("Bullet Died");
       }
     }
     
@@ -168,6 +168,8 @@ class MainGame {
             if (selectedTower!= null)
             {
               selectedTower.selected = false;
+              selectedTower = null;
+              return;
             }
             Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY));
             Tile tile = level.getTile(g);
@@ -187,7 +189,7 @@ class MainGame {
                   }
                 }
               }
-            if (tile.TERRAIN != 2) {
+            if (tile.TERRAIN < 2) {
               Tower_Base newTower = new Tower_Base(g);
               newTower.mg = this;
               towers.add(newTower);
@@ -195,6 +197,8 @@ class MainGame {
               println("Tower Created" + " ");
             }
           }
+          //
+          
         }
       }
     }

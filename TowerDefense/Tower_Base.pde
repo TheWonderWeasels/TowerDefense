@@ -116,7 +116,7 @@ class Tower_Base {
     b.mg = mg;
     b.setStats(this.pixelP.x, this.pixelP.y, this.target.pixelP.x, this.target.pixelP.y, this.towerType);
     mg.bullets.add(b);
-    println("Pew Pew");
+    //println("Pew Pew");
   }
   
    void attackTimerCount() {
