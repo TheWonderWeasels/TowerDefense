@@ -54,7 +54,7 @@ void mouseReleased() {
     break;
     case MAIN_GAME:
     mg.mouseReleased();
-    hud.mouseReleased();
+    hud.mouseReleased(mg.selectedTower);
     break;
   }
 }
