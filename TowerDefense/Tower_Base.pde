@@ -27,13 +27,14 @@ class Tower_Base {
   }
 
   void draw() {
-
+    
     if (selected) {
       stroke(200);
       strokeWeight(2);
       fill(0, 0, 0, 50);
       ellipse(pixelP.x, pixelP.y, towerRange*2, towerRange*2);
     }
+    
     if(target != null && enemyInRange(target)) aim();
     noStroke();
     fill(255);
@@ -43,35 +44,34 @@ class Tower_Base {
     rect(- (TileHelper.W/2), - (TileHelper.H/2), TileHelper.W, TileHelper.H);
     popMatrix();
   }
-  void update()
-  {
+  
+  void update() {
     attackTimerCount();
     lastE = null;//previous enemy in the array
     currE = null;//current enemy in the array
     furthestE = null;//enemy thats traveled the furthest
     target = null;
     
-    if (mg.entities.size() != 0) {
-        ArrayList<Entity> inRange = new ArrayList<Entity>();//makes a new empty array
-        for (int j = 0; j < mg.entities.size(); j++) {//fills the array with all enemies in range
-          if (enemyInRange(mg.entities.get(j))) {
-            inRange.add(mg.entities.get(j));
-          }
+    if(mg.entities.size() != 0) {
+      ArrayList<Entity> inRange = new ArrayList<Entity>();//makes a new empty array
+      for (int j = 0; j < mg.entities.size(); j++) {//fills the array with all enemies in range
+        if (enemyInRange(mg.entities.get(j))) {
+          inRange.add(mg.entities.get(j));
         }
+      }
 
-        if (inRange.size() != 0) {
-          lastE = inRange.get(0);
-          furthestE = inRange.get(0);
-          for (int f = 0; f < inRange.size(); f++) {//for all enemies in range, compare their distance travelled and save the one with the highest distance
-            currE = inRange.get(f);
-            if (currE.disTravelled > lastE.disTravelled) {
-              furthestE = currE;
-            }
-            lastE = currE;
+      if(inRange.size() != 0) {
+        lastE = inRange.get(0);
+        furthestE = inRange.get(0);
+        for(int f = 0; f < inRange.size(); f++) {//for all enemies in range, compare their distance travelled and save the one with the highest distance
+          currE = inRange.get(f);
+          if(currE.disTravelled > lastE.disTravelled) {
+            furthestE = currE;
           }
-          target = furthestE;
+          lastE = currE;
         }
-      
+        target = furthestE;
+      }    
     }
   }
 
@@ -85,9 +85,10 @@ class Tower_Base {
 
     float distance = sqrt( ((enemyX - towerX)*(enemyX - towerX)) + ((enemyY - towerY)*(enemyY - towerY)));
 
-    if (distance <= towerR + enemyR) {
+    if(distance <= towerR + enemyR) {
       return true;
-    } else {
+    } 
+    else {
       return false;
     }
   }
@@ -104,14 +105,14 @@ class Tower_Base {
 
       towerAngle = atan2(yDis, xDis);
       
-       if(attackTimer <= 0) {
+      if(attackTimer <= 0) {
         shoot();
         attackTimer = towerSpeed;
       }
     }
   }
 
- void shoot(){
+  void shoot() {
     Bullets b = new Bullets();
     b.mg = mg;
     b.setStats(this.pixelP.x, this.pixelP.y, this.target.pixelP.x, this.target.pixelP.y, this.towerType);
@@ -119,9 +120,9 @@ class Tower_Base {
     //println("Pew Pew");
   }
   
-   void attackTimerCount() {
+  void attackTimerCount() {
     attackTimer -= mg.deltaTime;
-    if (attackTimer < 0) attackTimer = 0;
+    if(attackTimer < 0) attackTimer = 0;
   }
   
   void teleportTo(Point gridP) {
@@ -131,4 +132,5 @@ class Tower_Base {
       this.pixelP = tile.getCenter();
     }
   }
+  
 }
