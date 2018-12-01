@@ -24,13 +24,21 @@ class HUD {
   PFont bold = createFont("Comfortaa-Bold.ttf", 64);
   PFont main = createFont("Comfortaa-Regular.ttf", 64);
 
+  int diffCurrent = 0;
   String[] difficultyLvl = {"Easy", "Medium", "Hard"};
+  int natEnergyStart = 0;
   int natEnergyCurrent = 0;
+  int buy = 0;
+  int earn = 0;
+  int sell = 0;
   int pollutionLevelCurrent = 0;
   int currentRound = 0;
   int totalRounds = 30;
   String[] towerElem = {"Clay", "Wood", "Stone", "Wax", "Crystal"};
   int towerCurrentType = 5;
+  int towerCurrentPrice;
+  int towerUpgradePrice;
+  int towerSellPrice;
 
   PImage clayIcon = loadImage("clay01.png");
   PImage woodIcon = loadImage("wood01.png");
@@ -58,7 +66,7 @@ class HUD {
   int clayBasePrice = 10;
   float clayDamage = 5;
   float claySpeed = 1;
-  float clayRange = 200;
+  float clayRange = 100;
   int woodBasePrice = 50;
   float woodDamage = 10;
   float woodSpeed = 2;
@@ -75,6 +83,25 @@ class HUD {
   float crystalDamage = 50;
   float crystalSpeed = 10;
   float crystalRange = 500;
+  
+  int natEnergyBalance(int start, int buy, int sell, int earn) {
+    if(diffCurrent == 0) {
+      natEnergyStart = 100;
+    }
+    if(diffCurrent == 1) {
+      natEnergyStart = 100;
+    }
+    if(diffCurrent == 2) {
+      natEnergyStart = 50;
+    }
+    
+    natEnergyCurrent = natEnergyStart;
+    
+    natEnergyCurrent -= buy;
+    natEnergyCurrent += sell + earn;
+    
+    return natEnergyCurrent;
+  } 
 
   void draw(Tower_Base selectedTower) {
     noStroke();
@@ -86,10 +113,10 @@ class HUD {
     fill(1, 16, 27);
     textAlign(LEFT, TOP);
     textFont(bold, 20);
-    text("Defense of the Ancient Tree - " + difficultyLvl[0], 810, 60);
+    text("Defense of the Ancient Tree - " + difficultyLvl[diffCurrent], 810, 60);
 
     textFont(main, 16);
-    text("Nature Energy : " + natEnergyCurrent, 810, 100);
+    text("Nature Energy : " + natEnergyBalance(natEnergyStart, buy, sell, earn), 810, 100);
     text("Pollution Levels : " + pollutionLevelCurrent + "%", 810, 125);
     text("Current Round : " + currentRound + "/" + totalRounds, 810, 150);
 
@@ -160,8 +187,27 @@ class HUD {
       text("Current", 915, 473);
       text("Next Level", 1065, 473);
       textAlign(CENTER, TOP);
-      text("Sell [" + "CREATEPRICE" + "]", 1015, 625);
-      text("Upgrade [" + "IDK" + "]", 1015, 675);
+      if(selectedTower.towerLevel < 3) {
+        text("Upgrade\n[" + towerUpgradePrice + "]", 1015, 615);
+        text("Sell\n[" + towerSellPrice + "]", 1015, 685);
+        strokeWeight(1.5);
+        stroke(1, 16, 27);
+        noFill();
+        rect(957, 611, 116, 55);
+        rect(957, 680, 116, 55);
+      }
+      else if(selectedTower.towerLevel == 3) {
+        fill(128);
+        text("MAX\n" + "LEVEL", 1015, 615);
+        fill(1, 16, 27);
+        text("Sell\n[" + "---" + "]", 1015, 685);
+        strokeWeight(1.5);
+        stroke(128);
+        noFill();
+        rect(957, 611, 116, 55);
+        stroke(1, 16, 27);
+        rect(957, 680, 116, 55);
+      }
       // Stats
       textAlign(LEFT, TOP);
       textFont(main, 16);
@@ -356,52 +402,77 @@ class HUD {
     }
   }
 
-  void mouseReleased() {
+  void mouseReleased(Tower_Base selectedTower) {
     mouseHoverColor = color(0, 255, 0, 25);
     // ClayTower
-    if (overButton(840, 313, 50, 50)) {
+    if(overButton(840, 313, 50, 50)) {
       claySelected = true;
       woodSelected = false;
       stoneSelected = false;
       waxSelected = false;
       crystalSelected = false;
       towerCurrentType = 0;
+      towerCurrentPrice = clayBasePrice;
     }
     // WoodTower
-    else if (overButton(915, 313, 50, 50)) {
+    else if(overButton(915, 313, 50, 50)) {
       claySelected = false;
       woodSelected = true;
       stoneSelected = false;
       waxSelected = false;
       crystalSelected = false;
       towerCurrentType = 1;
+      towerCurrentPrice = woodBasePrice;
     }
     // StoneTower
-    else if (overButton(990, 313, 50, 50)) {
+    else if(overButton(990, 313, 50, 50)) {
       claySelected = false;
       woodSelected = false;
       stoneSelected = true;
       waxSelected = false;
       crystalSelected = false;
       towerCurrentType = 2;
+      towerCurrentPrice = stoneBasePrice;
     }
     // WaxTower
-    else if (overButton(1065, 313, 50, 50)) {
+    else if(overButton(1065, 313, 50, 50)) {
       claySelected = false;
       woodSelected = false;
       stoneSelected = false;
       waxSelected = true;
       crystalSelected = false;
       towerCurrentType = 3;
+      towerCurrentPrice = waxBasePrice;
     }
     // CrystalTower
-    else if (overButton(1140, 313, 50, 50)) {
+    else if(overButton(1140, 313, 50, 50)) {
       claySelected = false;
       woodSelected = false;
       stoneSelected = false;
       waxSelected = false;
       crystalSelected = true;
       towerCurrentType = 4;
+      towerCurrentPrice = crystalBasePrice;
+    }
+    // Tower on the game board
+    else if(selectedTower != null && selectedTower.selected == true) {
+      // Upgrade a tower
+      if(selectedTower.towerLevel < 3) {
+        towerUpgradePrice = (towerCurrentPrice - towerCurrentPrice/2) * selectedTower.towerLevel;
+        if(overButton(957, 611, 116, 55)) {
+          if(natEnergyCurrent >= towerUpgradePrice) {
+            selectedTower.towerLevel += 1;
+            towerUpgradePrice = (towerCurrentPrice - towerCurrentPrice/2) * selectedTower.towerLevel;
+          }
+        }
+      }
+      // Sell a tower
+      towerSellPrice = (towerCurrentPrice - towerCurrentPrice/4);
+      if(overButton(957, 680, 116, 55)) {
+        sell += towerSellPrice;
+        selectedTower.isDead = true;
+        selectedTower.selected = false;
+      }
     }
     //else {
     //  claySelected = false;
@@ -415,14 +486,13 @@ class HUD {
   /* Is the mouse hovering over the button area? */
   boolean overButton(int x, int y, int width, int height)
   {
-    if (mouseX >= x && mouseX <= x+width &&
-        mouseY >= y && mouseY <= y+height) {
+    if(mouseX >= x && mouseX <= x+width &&
+      mouseY >= y && mouseY <= y+height) {
       return true;
     }
     else {
     return false;
     }
   }
-  
   
 }

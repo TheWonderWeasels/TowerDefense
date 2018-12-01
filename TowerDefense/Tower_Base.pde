@@ -14,8 +14,8 @@ class Tower_Base {
   PImage waxT02 = loadImage("wax02.png");
   PImage waxT03 = loadImage("wax03.png");
   PImage crystalT01 = loadImage("crystal01.png");
-  PImage crystalT02 = loadImage("crystal03.png");
-  PImage crystalT03 = loadImage("crystal02.png");
+  PImage crystalT02 = loadImage("crystal02.png");
+  PImage crystalT03 = loadImage("crystal03.png");
   
   MainGame mg;
   Point gridP = new Point(); // Current Position;
@@ -61,20 +61,60 @@ class Tower_Base {
     pushMatrix();
     translate(pixelP.x , pixelP.y);
     rotate(towerAngle - PI/2);
-    if(towerType == 0) {
-      image(clayT01, -25, -25);
+    if(towerType == 0) { // Clay
+      if(towerLevel == 1) {
+        image(clayT01, -25, -25);
+      }
+      else if(towerLevel == 2) {
+        image(clayT02, -25, -25);
+      }
+      else if(towerLevel == 3) {
+        image(clayT03, -25, -25);
+      }
+    } 
+    if(towerType == 1) { // Wood
+      if(towerLevel == 1) {
+        image(woodT01, -25, -25);
+      }
+      else if(towerLevel == 2) {
+        image(woodT02, -25, -25);
+      }
+      else if(towerLevel == 3) {
+        image(woodT03, -25, -25);
+      }
     }
-    if(towerType == 1) {
-      image(woodT01, -25, -25);
+    if(towerType == 2) { // Stone
+      if(towerLevel == 1) {
+        image(stoneT01, -25, -25);
+      }
+      else if(towerLevel == 2) {
+        image(stoneT02, -25, -25);
+      }
+      else if(towerLevel == 3) {
+        image(stoneT03, -25, -25);
+      }
     }
-    if(towerType == 2) {
-      image(stoneT01, -25, -25);
+    if(towerType == 3) { // Wax
+      if(towerLevel == 1) {
+        image(waxT01, -25, -25);
+      }
+      else if(towerLevel == 2) {
+        image(waxT02, -25, -25);
+      }
+      else if(towerLevel == 3) {
+        image(waxT03, -25, -25);
+      }
     }
-    if(towerType == 3) {
-      image(waxT01, -25, -25);
-    }
-    if(towerType == 4) {
-      image(crystalT01, -25, -25);
+    if(towerType == 4) { // Crystal
+      if(towerLevel == 1) {
+        image(crystalT01, -25, -25);
+      }
+      else if(towerLevel == 2) {
+        image(crystalT02, -25, -25);
+      }
+      else if(towerLevel == 3) {
+        image(crystalT03, -25, -25);
+      }
     }
     //rect(- (TileHelper.W/2), - (TileHelper.H/2), TileHelper.W, TileHelper.H);
     popMatrix();
