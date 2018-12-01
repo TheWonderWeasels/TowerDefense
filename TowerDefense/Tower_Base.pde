@@ -1,4 +1,22 @@
 class Tower_Base {
+  
+  // The Towers images
+  PImage clayT01 = loadImage("clay01.png");
+  PImage clayT02 = loadImage("clay02.png");
+  PImage clayT03 = loadImage("clay03.png");
+  PImage woodT01 = loadImage("wood01.png");
+  PImage woodT02 = loadImage("wood02.png");
+  PImage woodT03 = loadImage("wood03.png");
+  PImage stoneT01 = loadImage("stone01.png");
+  PImage stoneT02 = loadImage("stone02.png");
+  PImage stoneT03 = loadImage("stone03.png");
+  PImage waxT01 = loadImage("wax01.png");
+  PImage waxT02 = loadImage("wax02.png");
+  PImage waxT03 = loadImage("wax03.png");
+  PImage crystalT01 = loadImage("crystal01.png");
+  PImage crystalT02 = loadImage("crystal03.png");
+  PImage crystalT03 = loadImage("crystal02.png");
+  
   MainGame mg;
   Point gridP = new Point(); // Current Position;
   PVector pixelP = new PVector();
@@ -9,7 +27,7 @@ class Tower_Base {
   public float towerDamage = 5;
   public float towerSpeed = 1;//Time Between Tower Attacks
   public float towerAngle = 0;
-  public float attackTimer = 1;
+  public float attackTimer = 1; 
 
   public float towerRotation = 0;
   public boolean isDead = false;
@@ -27,7 +45,6 @@ class Tower_Base {
   }
 
   void draw() {
-    
     if (selected) {
       stroke(200);
       strokeWeight(2);
@@ -36,12 +53,30 @@ class Tower_Base {
     }
     
     if(target != null && enemyInRange(target)) aim();
+    
     noStroke();
     fill(255);
+    
+    // Drawing the Tower on the ground
     pushMatrix();
     translate(pixelP.x , pixelP.y);
     rotate(towerAngle - PI/2);
-    rect(- (TileHelper.W/2), - (TileHelper.H/2), TileHelper.W, TileHelper.H);
+    if(towerType == 0) {
+      image(clayT01, -25, -25);
+    }
+    if(towerType == 1) {
+      image(woodT01, -25, -25);
+    }
+    if(towerType == 2) {
+      image(stoneT01, -25, -25);
+    }
+    if(towerType == 3) {
+      image(waxT01, -25, -25);
+    }
+    if(towerType == 4) {
+      image(crystalT01, -25, -25);
+    }
+    //rect(- (TileHelper.W/2), - (TileHelper.H/2), TileHelper.W, TileHelper.H);
     popMatrix();
   }
   
@@ -130,6 +165,29 @@ class Tower_Base {
     if (tile != null) {
       this.gridP = gridP.get();
       this.pixelP = tile.getCenter();
+    }
+  }
+  
+  void setTowerType(int tT) {
+    // Clay Tower
+    if(tT == 0) {
+      towerType = 0;
+    }
+    // Wood Tower
+    if(tT == 1) {
+      towerType = 1;
+    }
+    // Stone Tower
+    if(tT == 2) {
+      towerType = 2;
+    }
+    // Wax Tower
+    if(tT == 3) {
+      towerType = 3;
+    }
+    // Crystal Tower
+    if(tT == 4) {
+      towerType = 4;
     }
   }
   

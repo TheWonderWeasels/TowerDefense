@@ -30,6 +30,7 @@ class HUD {
   int currentRound = 0;
   int totalRounds = 30;
   String[] towerElem = {"Clay", "Wood", "Stone", "Wax", "Crystal"};
+  int towerCurrentType = 5;
 
   PImage clayIcon = loadImage("clay01.png");
   PImage woodIcon = loadImage("wood01.png");
@@ -364,6 +365,7 @@ class HUD {
       stoneSelected = false;
       waxSelected = false;
       crystalSelected = false;
+      towerCurrentType = 0;
     }
     // WoodTower
     else if (overButton(915, 313, 50, 50)) {
@@ -372,6 +374,7 @@ class HUD {
       stoneSelected = false;
       waxSelected = false;
       crystalSelected = false;
+      towerCurrentType = 1;
     }
     // StoneTower
     else if (overButton(990, 313, 50, 50)) {
@@ -380,6 +383,7 @@ class HUD {
       stoneSelected = true;
       waxSelected = false;
       crystalSelected = false;
+      towerCurrentType = 2;
     }
     // WaxTower
     else if (overButton(1065, 313, 50, 50)) {
@@ -388,6 +392,7 @@ class HUD {
       stoneSelected = false;
       waxSelected = true;
       crystalSelected = false;
+      towerCurrentType = 3;
     }
     // CrystalTower
     else if (overButton(1140, 313, 50, 50)) {
@@ -396,6 +401,7 @@ class HUD {
       stoneSelected = false;
       waxSelected = false;
       crystalSelected = true;
+      towerCurrentType = 4;
     }
     //else {
     //  claySelected = false;
@@ -417,4 +423,6 @@ class HUD {
     return false;
     }
   }
+  
+  
 }

@@ -132,6 +132,7 @@ class MainGame {
     else {
       mouseP = null;
     }
+    
   }
 
   void getDeltaTime() {
@@ -171,8 +172,9 @@ class MainGame {
                  }
               }
             }
-            if(tile.TERRAIN < 2) {
+            if(tile.TERRAIN < 2 && hud.towerCurrentType != 5) {
               Tower_Base newTower = new Tower_Base(g);
+              newTower.setTowerType(hud.towerCurrentType);
               newTower.mg = this;
               towers.add(newTower);
               tile.TERRAIN = 2;//updates the pathfinding grid with the tower

@@ -1,5 +1,5 @@
-class Entity
-{
+class Entity {
+
   Point gridP = new Point(); // Current Position;
   Point gridT = new Point(); // target position;
 
@@ -9,7 +9,7 @@ class Entity
   float speed = 5;
   float baseSpeed = 1;
   float radius = 25;
-  
+
   int health = 5;
   int eType = 0;
   float timeToDie = 0;
@@ -17,14 +17,14 @@ class Entity
   PVector pixelP = new PVector();
   ArrayList<Tile> path;
   boolean findPath = false;
-  
+
   Sprite enemyNormal, enemyBig, enemyTall;
   
   Entity(Point P) {
     teleportTo(P);
     findPathAndTakeNextStep();
   }
-  
+
   void draw() {
     noStroke();
     enemyNormal.update();
@@ -41,8 +41,8 @@ class Entity
     }
     drawPath();
   }
-  
-  void setType(int t) { 
+
+  void setType(int t) {
     enemyNormal = new Sprite("EnemyNormal_", 3);
     enemyBig = new Sprite("EnemyBig_", 3);
     enemyTall = new Sprite("EnemyTall_", 3);
@@ -62,7 +62,7 @@ class Entity
       eType = 3;
     }
   }
-  
+
   void drawPath() {
     if(path != null && path.size() > 1) {
       stroke(0);
@@ -76,7 +76,7 @@ class Entity
       ellipse(prevP.x, prevP.y, 8, 8);
     }
   }
-  
+
   void teleportTo(Point gridP) {
     Tile tile = level.getTile(gridP);
     if(tile != null) {
@@ -85,18 +85,18 @@ class Entity
       this.pixelP = tile.getCenter();
     }
   }
-  
+
   void setTargetPosition(Point gridT) {
     this.gridT = gridT.get();
     findPath = true;
   }
-  
+
   void delayDeath() {
     if(timeToDie == 0) {
-      timeToDie = millis() + 500; 
+      timeToDie = millis() + 500;
     }
   }
-  
+
   void update() {
     if(timeToDie != 0) {
       if(millis() > timeToDie) {
@@ -104,12 +104,12 @@ class Entity
       }
     }
     if(health <= 0) {
-      isDead = true; 
+      isDead = true;
     }
     if(findPath == true) findPathAndTakeNextStep();
     updateMove();
   }
-  
+
   void findPathAndTakeNextStep() {
     findPath = false;
     Tile start = level.getTile(gridP);
@@ -120,18 +120,18 @@ class Entity
     }
     path = pathfinder.findPath(start, end);
 
-    if(path != null && path.size() > 1) { 
+    if(path != null && path.size() > 1) {
       Tile tile = path.get(1);
       if(tile.isPassable()) gridP = new Point(tile.X, tile.Y);
       else {
-        println("Path Blocked"); 
+        println("Path Blocked");
         if(tile.TERRAIN != 3) {
-          PollutionBomb(); 
+          PollutionBomb();
         }
       }
     }
   }
-  
+
   void PollutionBomb() {
     // Get GridP
     // Collect all neighbors
@@ -150,7 +150,7 @@ class Entity
         }
       }
     }
-    
+
     for(Tile t:currentTile.diagNeighbors) {
       if(t.TERRAIN != 3) {
         t.TERRAIN = 4;
@@ -163,20 +163,20 @@ class Entity
       }
     }
   }
-  
+
   void updateMove() {
-    
+
     float snapThreshold = .3;
     PVector pixlT = level.getTileCenterAt(gridP);
     PVector diff = PVector.sub(pixlT, pixelP);
     disTravelled += diff.mag();
     pixelP.x += diff.x * mg.deltaTime * speed;
     pixelP.y += diff.y * mg.deltaTime * speed;
-    
+
     if (abs(diff.x) < snapThreshold) pixelP.x = pixlT.x;
     if (abs(diff.y) < snapThreshold) pixelP.y = pixlT.y;
 
     if (pixlT.x == pixelP.x && pixlT.y == pixelP.y) findPath = true;
   }
-  
+
 }
