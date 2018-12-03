@@ -2,6 +2,9 @@
 int gameState = 0; //The current state
 final int START_MENU = 0;
 final int MAIN_GAME = 1;
+final int PAUSE_GAME = 2; // Not implemented yet
+final int LOSE_GAME = 3;
+final int WIN_GAME = 4;
 
 StartMenu sm;
 MainGame mg;
