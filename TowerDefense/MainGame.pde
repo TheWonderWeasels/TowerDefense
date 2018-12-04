@@ -1,6 +1,6 @@
 class MainGame {
   ArrayList<Tile> tiles = new ArrayList<Tile>();
-
+  
   Tower_Base selectedTower;
   ArrayList<Entity> entities = new ArrayList<Entity>();
   ArrayList<Tower_Base> towers = new ArrayList<Tower_Base>();   //Towers array
@@ -41,6 +41,17 @@ class MainGame {
     }
     for(Bullets b: bullets) {
       b.update();
+      if(!b.isDead)
+      {
+        for(Entity e: entities)
+        {
+          if(b.radial.CheckRadialCollision(e.radial))
+          {
+            b.isDead = true;
+            e.health -= b.bulletDamage; // This should probably change with the other bullet types;
+          }
+        }
+      }
     }
     
     // Removing dead things from lists
@@ -63,6 +74,7 @@ class MainGame {
       if(entities.get(i).isDead)
       {
        entities.remove(i); 
+       hud.earn += 2;
       }
     }
     

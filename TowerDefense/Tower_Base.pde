@@ -34,7 +34,8 @@ class Tower_Base {
   public boolean selected = false;
   
   public Entity target;
-
+  public Radial radial = new Radial(towerRange, pixelP);
+  
   //tower aiming variables
   Entity lastE;//previous enemy in the array
   Entity currE;//current enemy in the array
@@ -42,6 +43,7 @@ class Tower_Base {
   
   Tower_Base(Point P) {
     teleportTo(P);
+    radial.pos = pixelP;
   }
 
   void draw() {
@@ -160,7 +162,9 @@ class Tower_Base {
 
     float distance = sqrt( ((enemyX - towerX)*(enemyX - towerX)) + ((enemyY - towerY)*(enemyY - towerY)));
 
-    if(distance <= towerR + enemyR) {
+    //if(distance <= towerR + enemyR) {
+    if(radial.CheckRadialCollision(enemy.radial))
+    {
       return true;
     } 
     else {
@@ -190,7 +194,7 @@ class Tower_Base {
   void shoot() {
     Bullets b = new Bullets();
     b.mg = mg;
-    b.setStats(this.pixelP.x, this.pixelP.y, this.target.pixelP.x, this.target.pixelP.y, this.towerType);
+    b.setStats(this.pixelP.x, this.pixelP.y, this.target.pixelP.x, this.target.pixelP.y, this.towerType, this.towerDamage);
     mg.bullets.add(b);
     //println("Pew Pew");
   }

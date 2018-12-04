@@ -18,6 +18,7 @@ class Entity {
   ArrayList<Tile> path;
   boolean findPath = false;
 
+  Radial radial = new Radial(radius, pixelP);
   Sprite enemyNormal, enemyBig, enemyTall;
   
   Entity(Point P) {
@@ -58,7 +59,7 @@ class Entity {
     }
     else if(t == 3) { // Tank
       speed = 4;
-      health = 10;
+      health = 20;
       eType = 3;
     }
   }
@@ -109,6 +110,7 @@ class Entity {
     }
     if(findPath == true) findPathAndTakeNextStep();
     updateMove();
+    radial.pos = pixelP;
   }
 
   void findPathAndTakeNextStep() {
