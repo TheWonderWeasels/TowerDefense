@@ -194,7 +194,7 @@ class Tower_Base {
   void shoot() {
     Bullets b = new Bullets();
     b.mg = mg;
-    b.setStats(this.pixelP.x, this.pixelP.y, this.target.pixelP.x, this.target.pixelP.y, this.towerType);
+    b.setStats(this.pixelP.x, this.pixelP.y, this.target.pixelP.x, this.target.pixelP.y, this.towerType, this.towerDamage);
     mg.bullets.add(b);
     //println("Pew Pew");
   }

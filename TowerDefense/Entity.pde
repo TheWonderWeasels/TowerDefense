@@ -59,7 +59,7 @@ class Entity {
     }
     else if(t == 3) { // Tank
       speed = 4;
-      health = 10;
+      health = 20;
       eType = 3;
     }
   }
