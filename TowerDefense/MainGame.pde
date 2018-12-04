@@ -72,6 +72,10 @@ class MainGame {
      ready = false;
      getNextWave();
     }
+    
+    if(hud.pollutionLevelCurrent >= 100) {
+      gameState = 3;
+    }
   }
   
   void spawnEnemy() {

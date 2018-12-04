@@ -5,6 +5,7 @@ final int MAIN_GAME = 1;
 final int PAUSE_GAME = 2; // Not implemented yet
 final int LOSE_GAME = 3;
 final int WIN_GAME = 4;
+final int DIFFICULTY = 5; // Not implemented yet
 
 StartMenu sm;
 MainGame mg;
@@ -34,6 +35,14 @@ void draw(){
     mg.draw();
     hud.draw(mg.selectedTower);
     break;
+    case PAUSE_GAME:
+    break;
+    case LOSE_GAME:
+    sm.draw();
+    break;
+    case WIN_GAME:
+    sm.draw();
+    break;
   }
 }
 
@@ -45,6 +54,14 @@ void mousePressed() {
     break;
     case MAIN_GAME:
     hud.mousePressed();
+    break;
+    case PAUSE_GAME:
+    break;
+    case LOSE_GAME:
+    sm.mousePressed();
+    break;
+    case WIN_GAME:
+    sm.mousePressed();
     break;
   }
 }
@@ -58,6 +75,14 @@ void mouseReleased() {
     case MAIN_GAME:
     mg.mouseReleased();
     hud.mouseReleased(mg.selectedTower);
+    break;
+    case PAUSE_GAME:
+    break;
+    case LOSE_GAME:
+    sm.mouseReleased();
+    break;
+    case WIN_GAME:
+    sm.mouseReleased();
     break;
   }
 }
