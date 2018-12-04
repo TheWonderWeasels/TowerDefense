@@ -32,7 +32,7 @@ class HUD {
   int earn = 0;
   int sell = 0;
   int pollutionLevelCurrent = 0;
-  int currentRound = 0;
+  //int currentRound = 0;
   int totalRounds = 30;
   String[] towerElem = {"Clay", "Wood", "Stone", "Wax", "Crystal"};
   int towerCurrentType = 5;
@@ -118,7 +118,24 @@ class HUD {
     textFont(main, 16);
     text("Nature Energy : " + natEnergyBalance(natEnergyStart, buy, sell, earn), 810, 100);
     text("Pollution Levels : " + pollutionLevelCurrent + "%", 810, 125);
-    text("Current Round : " + currentRound + "/" + totalRounds, 810, 150);
+    //text("Current Round : " + currentRound + "/" + totalRounds, 810, 150);
+    text("Current Round : " + (mg.waveIndex+1) + " / " + Waves.WAVES.length, 810, 150);
+    
+    // Start Round Button
+    textAlign(CENTER, TOP);
+    text("Start Round", 900, 225);
+    strokeWeight(1.5);
+    stroke(1, 16, 27);
+    noFill(); 
+    rect(843, 214, 113, 40);
+    
+    // Pause Menu?
+    stroke(128);
+    fill(128);
+    text("Pause Game", 1131, 225);
+    noFill();
+    rect(1074, 214, 113, 40);
+    noStroke();
 
     // Checking where the mouse is
     update(mouseX, mouseY);
@@ -386,7 +403,6 @@ class HUD {
   void mousePressed() {
     if(clayHover) {
       mouseHoverColor = mouseClickColor;
-      println("I pushed the clay button");
     }
     if(woodHover) {
       mouseHoverColor = mouseClickColor;
@@ -473,6 +489,9 @@ class HUD {
         selectedTower.isDead = true;
         selectedTower.selected = false;
       }
+    }
+    else if(overButton(843, 214, 113, 40)) {
+      mg.ready = true;
     }
     //else {
     //  claySelected = false;

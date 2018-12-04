@@ -64,17 +64,17 @@ class Entity {
   }
 
   void drawPath() {
-    if(path != null && path.size() > 1) {
-      stroke(0);
-      PVector prevP = pixelP.get();//path.get(0).getCenter();
-      for (int i = 1; i < path.size (); i++) {
-        PVector currP = path.get(i).getCenter();
-        line(prevP.x, prevP.y, currP.x, currP.y);
-        prevP = currP;
-      }
-      noStroke();
-      ellipse(prevP.x, prevP.y, 8, 8);
-    }
+    //if(path != null && path.size() > 1) {
+    //  stroke(0);
+    //  PVector prevP = pixelP.get();//path.get(0).getCenter();
+    //  for (int i = 1; i < path.size (); i++) {
+    //    PVector currP = path.get(i).getCenter();
+    //    line(prevP.x, prevP.y, currP.x, currP.y);
+    //    prevP = currP;
+    //  }
+    //  noStroke();
+    //  ellipse(prevP.x, prevP.y, 8, 8);
+    //}
   }
 
   void teleportTo(Point gridP) {
@@ -101,6 +101,7 @@ class Entity {
     if(timeToDie != 0) {
       if(millis() > timeToDie) {
         isDead = true;
+        hud.pollutionLevelCurrent += 10;
       }
     }
     if(health <= 0) {
@@ -119,7 +120,7 @@ class Entity {
       return;
     }
     path = pathfinder.findPath(start, end);
-
+    
     if(path != null && path.size() > 1) {
       Tile tile = path.get(1);
       if(tile.isPassable()) gridP = new Point(tile.X, tile.Y);
