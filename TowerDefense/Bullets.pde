@@ -2,9 +2,7 @@ class Bullets {
   MainGame mg;
   
   float bulletType = 1; // 1 = clay, 2 = wood, 3 = stone, 4 = wax, 5 = crystal
-  
-  float bulletX = 0;
-  float bulletY = 0;
+  PVector pos = new PVector();
   float startX = 0;
   float startY = 0;
   float targetX = 0;
@@ -16,24 +14,29 @@ class Bullets {
   float bXSpeed = 0;
   float bYSpeed = 0;
   
+  float radius = 5;
+  
+  Radial radial = new Radial(radius, pos);
+  
   boolean isDead = false;
   
 
   void draw() {
     noStroke();
     fill(0);
-    ellipse(bulletX, bulletY, 5, 5);
+    ellipse(pos.x, pos.y, 10, 10);
   }
 
   void update() {
-    bulletX += velocity.x * bulletSpeed * mg.deltaTime;
-    bulletY += velocity.y * bulletSpeed * mg.deltaTime;    
-    if (bulletX > 1000) isDead = true;
+    pos.x += velocity.x * bulletSpeed * mg.deltaTime;
+    pos.y += velocity.y * bulletSpeed * mg.deltaTime;
+    radial.pos = pos;
+    if (pos.x > 1000) isDead = true;
   }
   
   void setStats(float sX, float sY, float eX, float eY, float type){
-    bulletX = sX;
-    bulletY = sY;
+    pos.x = sX;
+    pos.y = sY;
     startX = sX;
     startY = sY;
     targetX = eX;

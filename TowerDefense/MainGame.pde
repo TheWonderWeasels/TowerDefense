@@ -41,6 +41,17 @@ class MainGame {
     }
     for(Bullets b: bullets) {
       b.update();
+      if(!b.isDead)
+      {
+        for(Entity e: entities)
+        {
+          if(b.radial.CheckRadialCollision(e.radial))
+          {
+            b.isDead = true;
+            e.health -= 1; // This should probably change with the other bullet types;
+          }
+        }
+      }
     }
     
     // Removing dead things from lists
