@@ -101,6 +101,7 @@ class Entity {
     if(timeToDie != 0) {
       if(millis() > timeToDie) {
         isDead = true;
+        hud.pollutionLevelCurrent += 1;
       }
     }
     if(health <= 0) {
@@ -119,7 +120,7 @@ class Entity {
       return;
     }
     path = pathfinder.findPath(start, end);
-
+    
     if(path != null && path.size() > 1) {
       Tile tile = path.get(1);
       if(tile.isPassable()) gridP = new Point(tile.X, tile.Y);
