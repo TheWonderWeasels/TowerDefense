@@ -95,6 +95,7 @@ class WinMenu {
     // Restart Game
     if(overButton(352, 376, 380, 100)) {
       gameState = 1;
+      mg.reset();
     }
     // Back to Main Menu
     if(overButton(352, 502, 380, 100)) {

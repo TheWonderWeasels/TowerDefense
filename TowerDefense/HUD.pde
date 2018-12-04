@@ -84,15 +84,23 @@ class HUD {
   float crystalSpeed = 10;
   float crystalRange = 500;
   
+  void reset()
+  {
+    natEnergyCurrent = natEnergyStart;
+    pollutionLevelCurrent = 0;
+    buy = 0;
+    sell = 0;
+    earn = 0;
+  }
   int natEnergyBalance(int start, int buy, int sell, int earn) {
     if(diffCurrent == 0) {
-      natEnergyStart = 100;
+      natEnergyStart = 50;
     }
     if(diffCurrent == 1) {
-      natEnergyStart = 100;
+      natEnergyStart = 40;
     }
     if(diffCurrent == 2) {
-      natEnergyStart = 50;
+      natEnergyStart = 20;
     }
     
     natEnergyCurrent = natEnergyStart;
@@ -488,6 +496,10 @@ class HUD {
         sell += towerSellPrice;
         selectedTower.isDead = true;
         selectedTower.selected = false;
+        level.getTile(selectedTower.gridP).TERRAIN = 1;
+        selectedTower = null;
+       
+
       }
     }
     else if(overButton(843, 214, 113, 40)) {

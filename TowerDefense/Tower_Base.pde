@@ -195,6 +195,7 @@ class Tower_Base {
     Bullets b = new Bullets();
     b.mg = mg;
     b.setStats(this.pixelP.x, this.pixelP.y, this.target.pixelP.x, this.target.pixelP.y, this.towerType, this.towerDamage);
+    b.typeModifier();
     mg.bullets.add(b);
     //println("Pew Pew");
   }
@@ -216,23 +217,40 @@ class Tower_Base {
     // Clay Tower
     if(tT == 0) {
       towerType = 0;
+      towerRange = 100;
+      towerDamage = 3;
+      towerSpeed = 1;
+      
     }
     // Wood Tower
     if(tT == 1) {
       towerType = 1;
+      towerSpeed = 1.2;
+      towerRange = 150;
+      towerDamage = 6;
     }
     // Stone Tower
     if(tT == 2) {
       towerType = 2;
+      towerSpeed = 2;
+      towerRange = 75;
+      towerDamage = 10;
     }
     // Wax Tower
     if(tT == 3) {
       towerType = 3;
+      towerRange = 200;
+      towerDamage = 1;
+      towerSpeed = 1;
     }
     // Crystal Tower
     if(tT == 4) {
       towerType = 4;
+      towerSpeed = 0.1;
+      towerRange = 500;
+      towerDamage = 0.5;
     }
+    radial.radius = towerRange;
   }
   
 }

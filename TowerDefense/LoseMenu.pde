@@ -94,6 +94,7 @@ class LoseMenu {
     mouseHoverColor = color(0, 255, 0, 25);
     // Restart Game
     if(overButton(352, 376, 380, 100)) {
+      mg.reset();
       gameState = 1;
     }
     // Back to Main Menu

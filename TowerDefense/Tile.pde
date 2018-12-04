@@ -43,7 +43,7 @@ class Tile{
    if(TERRAIN == 0) fill(130, 190, 165, 0); // fill(200,100,50);
    if(TERRAIN == 1) fill(130, 190, 165, 0); // fill(200,100,50);
    //if(TERRAIN == 2) fill(196, 221, 210);
-   if(TERRAIN == 2) fill(130);
+   if(TERRAIN == 2) fill(0,0,0,0);
 
    if(TERRAIN == 3) noFill();
    if(TERRAIN == 4) fill(27,2,69);

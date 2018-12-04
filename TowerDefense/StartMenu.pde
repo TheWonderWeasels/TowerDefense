@@ -257,6 +257,7 @@ class StartMenu {
       // Start a Game
       if(overButton(438, 277, 314, 135)) {
         gameState = 1;
+        mg.reset();
       }
       // Show Controls
       if(overButton(441, 555, 312, 136)) {

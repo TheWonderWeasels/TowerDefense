@@ -49,17 +49,17 @@ class Entity {
     enemyTall = new Sprite("EnemyTall_", 3);
     if(t == 1) { // normal
       speed = 6;
-      health = 10;
+      health = 20;
       eType = 1;
     }
     else if(t == 2) { // fasty boi
       speed = 10;
-      health = 5;
+      health = 10;
       eType = 2;
     }
     else if(t == 3) { // Tank
       speed = 4;
-      health = 20;
+      health = 40;
       eType = 3;
     }
   }

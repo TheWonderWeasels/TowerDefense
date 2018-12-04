@@ -20,6 +20,23 @@ class MainGame {
   float currTime = 0;
   float prevTime = 0;
   
+  void reset()
+  {
+   entities = new ArrayList<Entity>();
+   towers = new ArrayList<Tower_Base>();
+   bullets = new ArrayList<Bullets>();
+   ready = false;
+   spawnTimer = millis();
+   currentWave = Waves.WAVES[0];
+   waveIndex = 0;
+   spawnIndex = 0;
+   deltaTime = 0;
+   currTime = 0;
+   prevTime = 0;
+   hud.reset();
+   level.loadLevel(LevelDefs.LEVEL);
+   
+  }
   void update() {
     getDeltaTime();
     if(ready) {
@@ -103,6 +120,7 @@ class MainGame {
         e.setTargetPosition(new Point(0,0));
         e.setType(currentWave[spawnIndex]);
         e.mg = this;
+        e.health += waveIndex * 2;
         entities.add(e);
         spawnIndex++;
       }
@@ -113,6 +131,10 @@ class MainGame {
    if(waveIndex + 1 < Waves.WAVES.length -1) {
      waveIndex++;
      currentWave = Waves.WAVES[waveIndex]; 
+   }
+   else
+   {
+    gameState = 4; 
    }
   }
   
@@ -217,6 +239,14 @@ class MainGame {
     if (mouseX > 50 * 15) return false;
     if (mouseY< 50) return false;
     if (mouseY > 50 * 15) return false;
+    return true;
+  }
+  
+    boolean isOnGrid(PVector p) {
+    if (p.x < 50) return false;
+    if (p.x > 50 * 15) return false;
+    if (p.y< 50) return false;
+    if (p.y > 50 * 15) return false;
     return true;
   }
   
