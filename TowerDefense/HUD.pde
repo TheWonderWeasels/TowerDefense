@@ -403,7 +403,6 @@ class HUD {
   void mousePressed() {
     if(clayHover) {
       mouseHoverColor = mouseClickColor;
-      println("I pushed the clay button");
     }
     if(woodHover) {
       mouseHoverColor = mouseClickColor;

@@ -73,9 +73,15 @@ class MainGame {
      getNextWave();
     }
     
+    // Losing, which currently only kicks you back to Start Menu
     if(hud.pollutionLevelCurrent >= 100) {
       gameState = 3;
     }
+    
+    // Winning, which would kick you back to Start Menu, if I could figure out the condition
+    //if( OUR WIN CONDITION) {
+    //  gameState = 4;
+    //}
   }
   
   void spawnEnemy() {

@@ -64,17 +64,17 @@ class Entity {
   }
 
   void drawPath() {
-    if(path != null && path.size() > 1) {
-      stroke(0);
-      PVector prevP = pixelP.get();//path.get(0).getCenter();
-      for (int i = 1; i < path.size (); i++) {
-        PVector currP = path.get(i).getCenter();
-        line(prevP.x, prevP.y, currP.x, currP.y);
-        prevP = currP;
-      }
-      noStroke();
-      ellipse(prevP.x, prevP.y, 8, 8);
-    }
+    //if(path != null && path.size() > 1) {
+    //  stroke(0);
+    //  PVector prevP = pixelP.get();//path.get(0).getCenter();
+    //  for (int i = 1; i < path.size (); i++) {
+    //    PVector currP = path.get(i).getCenter();
+    //    line(prevP.x, prevP.y, currP.x, currP.y);
+    //    prevP = currP;
+    //  }
+    //  noStroke();
+    //  ellipse(prevP.x, prevP.y, 8, 8);
+    //}
   }
 
   void teleportTo(Point gridP) {
