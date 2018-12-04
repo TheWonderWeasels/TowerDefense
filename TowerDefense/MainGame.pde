@@ -14,7 +14,7 @@ class MainGame {
   int[] currentWave = Waves.WAVES[0];
   int waveIndex = 0;
   int spawnIndex = 0;
-  PImage bg = loadImage("bg_claytons.png");
+  PImage bg = loadImage("bg_board.png");
 
   float deltaTime = 0;
   float currTime = 0;
@@ -107,7 +107,7 @@ class MainGame {
   void draw() {
     background(bg);
 
-    fill(255, 255, 255);
+    fill(255, 255, 255, 0);
     noStroke();
     strokeWeight(0);
     rect(50, 50, 700, 700); // Play Space

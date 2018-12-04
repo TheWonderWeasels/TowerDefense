@@ -40,8 +40,8 @@ class Tile{
   void draw()
   {
 
-   if(TERRAIN == 0) fill(130, 190, 165); // fill(200,100,50);
-   if(TERRAIN == 1) fill(130, 190, 165); // fill(200,100,50);
+   if(TERRAIN == 0) fill(130, 190, 165, 0); // fill(200,100,50);
+   if(TERRAIN == 1) fill(130, 190, 165, 0); // fill(200,100,50);
    //if(TERRAIN == 2) fill(196, 221, 210);
    if(TERRAIN == 2) fill(130);
 

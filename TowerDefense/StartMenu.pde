@@ -39,73 +39,121 @@ class StartMenu {
   boolean controlsVisible = false;
   
   void draw() {
+    noStroke();
     // Checking where the mouse is
     update(mouseX, mouseY);
-    
+
     // Background Visuals
     background(bg);
-    noStroke();
     image(title, 266, 43);
-    
+
     // Start Game Button
     if(SGB_mouseHover) {
       fill(mouseHoverColor);
+      pushMatrix();
+      translate(438+(314/2), 277+(135/2));
+      scale(1.05);
+      image(start, -(314/2), -(135/2));
+      popMatrix();
+      rect(438, 277, 314, 135);
     }
     else {
       fill(SGB_Color);
     }
+    if(!SGB_mouseHover) {
     image(start, 438, 277);
     rect(438, 277, 314, 135);
-    
+    }
+
     // Load Game Button
     if(LGB_mouseHover) {
       fill(mouseHoverColor);
+      pushMatrix();
+      translate(439+(312/2), 418+(131/2));
+      scale(1.05);
+      image(load, -(312/2), -(131/2));
+      popMatrix();
+      rect(439, 418, 312, 131);
     }
     else {
       fill(LGB_Color);
     }
-    image(load, 439, 418);
-    rect(439, 418, 312, 131);
-    
+    if(!LGB_mouseHover) {
+      image(load, 439, 418);
+      rect(439, 418, 312, 131);
+    }
+
     // Quit Game Button
     if(QGB_mouseHover) {
       fill(mouseHoverColor);
+      pushMatrix();
+      translate(18+(210/2), 647+(130/2));
+      scale(1.05);
+      image(quit, -(210/2), -(130/2));
+      popMatrix();
+      rect(18, 647, 210, 130);
     }
     else {
       fill(QGB_Color);
     }
-    image(quit, 18, 647);
-    rect(18, 647, 210, 130);
-    
+    if(!QGB_mouseHover) {
+      image(quit, 18, 647);
+      rect(18, 647, 210, 130);
+    }
+
     // View Controls Button
     if(VCB_mouseHover) {
       fill(mouseHoverColor);
+      pushMatrix();
+      translate(441+(312/2), 555+(136/2));
+      scale(1.05);
+      image(controls, -(312/2), -(136/2));
+      popMatrix();
+      rect(441, 555, 312, 136);
     }
     else {
       fill(VCB_Color);
     }
-    image(controls, 441, 555);
-    rect(441, 555, 312, 136);
-    
+    if(!VCB_mouseHover) {
+      image(controls, 441, 555);
+      rect(441, 555, 312, 136);
+    }
+
     // Music On/Off Button
     if(MOOB_mouseHover) {
       fill(mouseHoverColor);
+      pushMatrix();
+      translate(1127+(137/2), 642+(114/2));
+      scale(1.05);
+      image(music, -(137/2), -(114/2));
+      popMatrix();
+      rect(1127, 642, 137, 114);
     }
     else {
       fill(MOOB_Color);
     }
-    image(music, 1127, 642);
-    rect(1127, 642, 137, 114);
-    
+    if(!MOOB_mouseHover) {
+      image(music, 1127, 642);
+      rect(1127, 642, 137, 114);
+    }
+
     // SFX On/Off Button
     if(SFXOOB_mouseHover) {
       fill(mouseHoverColor);
+      pushMatrix();
+      translate(1123+(142/2), 519+(114/2));
+      scale(1.05);
+      image(SFX, -(142/2), -(114/2));
+      popMatrix();
+      rect(1123, 519, 142, 114);
     }
     else {
       fill(SFXOOB_Color);
     }
-    image(SFX, 1123, 519);
-    rect(1123, 519, 142, 114);
+    if(!SFXOOB_mouseHover) {
+      image(SFX, 1123, 519);
+      rect(1123, 519, 142, 114);
+    }
 
     control(controlsVisible);
   }

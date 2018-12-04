@@ -9,6 +9,8 @@ final int DIFFICULTY = 5; // Not implemented yet
 
 StartMenu sm;
 MainGame mg;
+LoseMenu lm;
+WinMenu wm;
 HUD hud;
 Level level;
 PathFinder pathfinder;
@@ -17,6 +19,8 @@ void setup() {
   size(1280, 800);
   sm = new StartMenu();
   mg = new MainGame();
+  lm = new LoseMenu();
+  wm = new WinMenu();
   hud = new HUD();
   TileHelper.app = this;
   level = new Level();
@@ -36,12 +40,13 @@ void draw(){
     hud.draw(mg.selectedTower);
     break;
     case PAUSE_GAME:
+    
     break;
     case LOSE_GAME:
-    sm.draw();
+    lm.draw();
     break;
     case WIN_GAME:
-    sm.draw();
+    wm.draw();
     break;
   }
 }
@@ -56,12 +61,13 @@ void mousePressed() {
     hud.mousePressed();
     break;
     case PAUSE_GAME:
+    
     break;
     case LOSE_GAME:
-    sm.mousePressed();
+    lm.mousePressed();
     break;
     case WIN_GAME:
-    sm.mousePressed();
+    wm.mousePressed();
     break;
   }
 }
@@ -77,12 +83,13 @@ void mouseReleased() {
     hud.mouseReleased(mg.selectedTower);
     break;
     case PAUSE_GAME:
+    
     break;
     case LOSE_GAME:
-    sm.mouseReleased();
+    lm.mouseReleased();
     break;
     case WIN_GAME:
-    sm.mouseReleased();
+    wm.mouseReleased();
     break;
   }
 }

@@ -101,7 +101,7 @@ class Entity {
     if(timeToDie != 0) {
       if(millis() > timeToDie) {
         isDead = true;
-        hud.pollutionLevelCurrent += 1;
+        hud.pollutionLevelCurrent += 10;
       }
     }
     if(health <= 0) {
